@@ -1,9 +1,13 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './home/Home'
-import Navbar from './header/Navbar';
-import Footer from './footer/Footer'
-import Error from './error/Error'
+import Navbar from './pages/Navbar';
+import Home from './pages/Home'
+import About from './pages/About'
+import Contact from './pages/Contact';
+import Register from './pages/auth/Register';
+import SignIn from './pages/auth/SignIn';
+import Error from './pages/Error'
+import Footer from './pages/Footer'
 
 function App() {
   return (
