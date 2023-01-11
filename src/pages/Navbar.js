@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,7 +10,10 @@ import Link from "@mui/material/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
 
+
+
 export default function Navbar() {
+  let navigate = useNavigate()
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color='error'>
@@ -27,16 +31,16 @@ export default function Navbar() {
               <Link underline="hover" color="inherit" href="/">
                 Home
               </Link>
-              <Link underline="hover" color="inherit" href="/">
+              <Link underline="hover" color="inherit" href="/about">
                 About
               </Link>
-              <Link underline="hover" color="inherit" href="/">
+              <Link underline="hover" color="inherit" href="/contact">
                 Contact
               </Link>
             </Breadcrumbs>
           </div>
-          <Button color="inherit">Register</Button>
-          <Button color="inherit">Sign In</Button>
+          <Button color="inherit" onClick={() => {navigate("/register")}}>Register</Button>
+          <Button color="inherit" onClick={() => {navigate("/signin")}}>Sign In</Button>
         </Toolbar>
       </AppBar>
     </Box>
