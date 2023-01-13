@@ -1,15 +1,33 @@
-import { Typography, Card, CardContent, CardMedia, Grid } from "@mui/material";
+import {
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+  Grid,
+  Box,
+  Stack,
+} from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
 
 const About = () => {
   return (
-    <Container sx={{ background: 'linear-gradient(70deg,#007880, #b5bdbe)' }} maxWidth={false}>
-      <Typography variant="h3" sx={{ ml: 44 }}>ABOUT US</Typography>
-      <Container>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 mt-5" id="thriveHeader">
+    <Stack spacing={0}>
+      <Container
+        sx={{ background: "linear-gradient(70deg,#007880, #b5bdbe)" }}
+        maxWidth={false}
+      >
+        <Typography variant="h3" color="white" align="center">
+          ABOUT US
+        </Typography>
+      </Container>
+      <Container
+        sx={{ background: "linear-gradient(70deg,#007880, #b5bdbe)" }}
+        maxWidth={false}
+      >
+        <Grid container align="center">
+          <Grid item>
+            <Box sx={{ width: 400 }}>
               <Typography variant="h4">
                 We're in business to help you thrive
               </Typography>
@@ -30,137 +48,194 @@ const About = () => {
                 excepturi accusamus, modi provident inventore asperiores qui
                 quasi aliquid quibusdam et sapiente quia odio porro autem.
               </Typography>
-            </div>
+            </Box>
+          </Grid>
 
-            <div class="col-lg-5 offset-lg-1 my-5">
-              <Typography variant="h5" id="developerHeader">
-                We are developers
-              </Typography>
-              <img
-                id="computerImg"
-                src="assets/computer img.jpg"
-                alt="computer"
-                width="400"
-                height="300"
+          <Grid item>
+            <Typography variant="h5" id="developerHeader">
+              We are developers
+            </Typography>
+            <img
+              id="computerImg"
+              src="assets/computer img.jpg"
+              alt="computer"
+              width="400"
+              height="300"
+            />
+          </Grid>
+        </Grid>
+        <Typography variant="h3" color="color: azure;">
+          Meet the team
+        </Typography>
+
+        {/* Profiles start HERE!!!! */}
+        {/* Jeanette  */}
+
+        <Grid
+          xs
+          container
+          sx={{
+            minWidth: "100%",
+            minHeight: 600,
+            display: "flex",
+            flexDirection: "row",
+            backgroundColor: "green",
+            justifyContent: "center",
+          }}
+        >
+          <Grid
+            item
+            sx={{
+              maxWidth: 600,
+              minHeight: 600,
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "red",
+              mx: 2
+            }}
+          >
+            <Card sx={{ width: 210 }}>
+              <CardMedia
+                sx={{ height: 200, width: 200, ml: "5px", mt: "5px" }}
+                image="assets/Jay.png"
+                title="Jeanette's pic"
               />
-            </div>
-          </div>
-        </div>
-      </Container>
-      <Typography variant="h3" color="color: azure;">
-        Meet the team
-      </Typography>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  Jeanette
+                </Typography>
+                {/* <img src="assets/Jay.png" class="card-img-top" alt="jeanette" /> */}
+                <Typography variant="h5" class="card-title">
+                  Project Leader
+                </Typography>
+                <Typography variant="body1" class="card-text">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Facere, exercitationem non enim neque sequi eveniet possimus
+                  laboriosam aliquid, obcaecati reprehenderit a voluptate
+                  nostrum. Non adipisci laborum eligendi inventore blanditiis
+                  sunt!
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
 
-    {/* Profiles start HERE!!!! */}
-    {/* Jeanette  */}
+          {/* Malachi  */}
 
-      <Grid xs container columnSpacing={8} sx={{ mx: "auto", width: 1035 }}>
-        <Grid item>
-          <Card sx={{ width: 210 }}>
-            <CardMedia
-              sx={{ height: 200, width: 200, ml: '5px', mt: '5px' }}
-              image="assets/Jay.png"
-              title="Jeanette's pic"
-            />
-            <CardContent>
-              <Typography variant="h5" component="div">
-                Jeanette
-              </Typography>
-              {/* <img src="assets/Jay.png" class="card-img-top" alt="jeanette" /> */}
-              <Typography variant="h5" class="card-title">
-                Project Leader
-              </Typography>
-              <Typography variant="body1" class="card-text">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Facere, exercitationem non enim neque sequi eveniet possimus
-                laboriosam aliquid, obcaecati reprehenderit a voluptate nostrum.
-                Non adipisci laborum eligendi inventore blanditiis sunt!
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
+          <Grid
+            item
+            sx={{
+              maxWidth: 600,
+              minHeight: 600,
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "red",
+              mx: 2
+            }}
+            class="card h-100"
+          >
+            <Card sx={{ width: 210 }}>
+              <CardMedia
+                sx={{ height: 200, width: 200, ml: "5px", mt: "5px" }}
+                image="assets/mal.jpg"
+                title="Jeanette's pic"
+              />
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  Malachi
+                </Typography>
+                {/* <img src="assets/Jay.png" class="card-img-top" alt="jeanette" /> */}
+                <Typography variant="h5" class="card-title">
+                  Software Engineer
+                </Typography>
+                <Typography variant="body1" class="card-text">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Facere, exercitationem non enim neque sequi eveniet possimus
+                  laboriosam aliquid, obcaecati reprehenderit a voluptate
+                  nostrum. Non adipisci laborum eligendi inventore blanditiis
+                  sunt!
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
 
-        {/* Malachi  */}
-      
-        <Grid item class="card h-100">
-        <Card sx={{ width: 210 }}>
-            <CardMedia
-              sx={{ height: 200, width: 200, ml: '5px', mt: '5px' }}
-              image="assets/mal.jpg"
-              title="Jeanette's pic"
-            />
-            <CardContent>
-              <Typography variant="h5" component="div">
-                Malachi
-              </Typography>
-              {/* <img src="assets/Jay.png" class="card-img-top" alt="jeanette" /> */}
-              <Typography variant="h5" class="card-title">
-                Software Engineer
-              </Typography>
-              <Typography variant="body1" class="card-text">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Facere, exercitationem non enim neque sequi eveniet possimus
-                laboriosam aliquid, obcaecati reprehenderit a voluptate nostrum.
-                Non adipisci laborum eligendi inventore blanditiis sunt!
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
+          {/* Ricky  */}
 
-      {/* Ricky  */}
+          <Grid
+            item
+            sx={{
+              maxWidth: 600,
+              minHeight: 600,
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "red",
+              mx: 2
+            }}
+            class="card h-100"
+          >
+            <Card sx={{ width: 210 }}>
+              <CardMedia
+                sx={{ height: 200, width: 200, ml: "5px", mt: "5px" }}
+                image="assets/ric.png"
+                title="Jeanette's pic"
+              />
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  Enrique
+                </Typography>
+                {/* <img src="assets/Jay.png" class="card-img-top" alt="jeanette" /> */}
+                <Typography variant="h5" class="card-title">
+                  Software Developer
+                </Typography>
+                <Typography variant="body1" class="card-text">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Facere, exercitationem non enim neque sequi eveniet possimus
+                  laboriosam aliquid, obcaecati reprehenderit a voluptate
+                  nostrum. Non adipisci laborum eligendi inventore blanditiis
+                  sunt!
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
 
-        <Grid item class="card h-100">
-        <Card sx={{ width: 210 }}>
-            <CardMedia
-              sx={{ height: 200, width: 200, ml: '5px', mt: '5px' }}
-              image="assets/ric.png"
-              title="Jeanette's pic"
-            />
-            <CardContent>
-              <Typography variant="h5" component="div">
-                Enrique
-              </Typography>
-              {/* <img src="assets/Jay.png" class="card-img-top" alt="jeanette" /> */}
-              <Typography variant="h5" class="card-title">
-                Software Developer
-              </Typography>
-              <Typography variant="body1" class="card-text">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Facere, exercitationem non enim neque sequi eveniet possimus
-                laboriosam aliquid, obcaecati reprehenderit a voluptate nostrum.
-                Non adipisci laborum eligendi inventore blanditiis sunt!
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
+          {/* Karl  */}
 
-      {/* Karl  */}
-
-        <Grid item class="card h-100">
-        <Card sx={{ width: 210 }}>
-            <CardMedia
-              sx={{ height: 200, width: 200, ml: '5px', mt: '5px' }}
-              image="assets/kar.png"
-              title="Jeanette's pic"
-            />
-            <CardContent>
-              <Typography variant="h5" component="div">
-                Karl
-              </Typography>
-              {/* <img src="assets/Jay.png" class="card-img-top" alt="jeanette" /> */}
-              <Typography variant="h5" class="card-title">
-                Project Leader
-              </Typography>
-              <Typography variant="body1" class="card-text">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Facere, exercitationem non enim neque sequi eveniet possimus
-                laboriosam aliquid, obcaecati reprehenderit a voluptate nostrum.
-                Non adipisci laborum eligendi inventore blanditiis sunt!
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid class="row">
+          <Grid
+            item
+            sx={{
+              maxWidth: 600,
+              minHeight: 600,
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "red",
+              mx: 2
+            }}
+            class="card h-100"
+          >
+            <Card sx={{ width: 210 }}>
+              <CardMedia
+                sx={{ height: 200, width: 200, ml: "5px", mt: "5px" }}
+                image="assets/kar.png"
+                title="Jeanette's pic"
+              />
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  Karl
+                </Typography>
+                {/* <img src="assets/Jay.png" class="card-img-top" alt="jeanette" /> */}
+                <Typography variant="h5" class="card-title">
+                  Project Leader
+                </Typography>
+                <Typography variant="body1" class="card-text">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Facere, exercitationem non enim neque sequi eveniet possimus
+                  laboriosam aliquid, obcaecati reprehenderit a voluptate
+                  nostrum. Non adipisci laborum eligendi inventore blanditiis
+                  sunt!
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid class="row">
             <Typography variant="h4">Our mission</Typography>
             <Typography variant="body1">
               We believe in teams. Yours and ours. Our mission, culture, and
@@ -174,9 +249,10 @@ const About = () => {
               quidem nam officia omnis commodi architecto qui, incidunt et
               quibusdam libero fugiat, expedita adipisci?
             </Typography>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </Stack>
   );
 };
 
