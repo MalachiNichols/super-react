@@ -17,7 +17,7 @@ const About = () => {
         sx={{ background: "linear-gradient(70deg,#007880, #b5bdbe)" }}
         maxWidth={false}
       >
-        <Typography variant="h3" color="white" align="center">
+        <Typography variant="h3" color="white" align="center" sx={{ my: 2 }}>
           ABOUT US
         </Typography>
       </Container>
@@ -25,7 +25,19 @@ const About = () => {
         sx={{ background: "linear-gradient(70deg,#007880, #b5bdbe)" }}
         maxWidth={false}
       >
-        <Grid container align="center">
+        <Grid
+          container
+          align="center"
+          columnSpacing={10}
+          sx={{
+            minWidth: "100%",
+            minHeight: 600,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Grid item>
             <Box sx={{ width: 400 }}>
               <Typography variant="h4">
@@ -64,7 +76,7 @@ const About = () => {
             />
           </Grid>
         </Grid>
-        <Typography variant="h3" color="color: azure;">
+        <Typography variant="h3" color="white" align="center" sx={{ my: 2 }}>
           Meet the team
         </Typography>
 
@@ -79,7 +91,6 @@ const About = () => {
             minHeight: 600,
             display: "flex",
             flexDirection: "row",
-            backgroundColor: "green",
             justifyContent: "center",
           }}
         >
@@ -90,8 +101,7 @@ const About = () => {
               minHeight: 600,
               display: "flex",
               alignItems: "center",
-              backgroundColor: "red",
-              mx: 2
+              mx: 2,
             }}
           >
             <Card sx={{ width: 210 }}>
@@ -128,8 +138,7 @@ const About = () => {
               minHeight: 600,
               display: "flex",
               alignItems: "center",
-              backgroundColor: "red",
-              mx: 2
+              mx: 2,
             }}
             class="card h-100"
           >
@@ -167,8 +176,7 @@ const About = () => {
               minHeight: 600,
               display: "flex",
               alignItems: "center",
-              backgroundColor: "red",
-              mx: 2
+              mx: 2,
             }}
             class="card h-100"
           >
@@ -206,8 +214,7 @@ const About = () => {
               minHeight: 600,
               display: "flex",
               alignItems: "center",
-              backgroundColor: "red",
-              mx: 2
+              mx: 2,
             }}
             class="card h-100"
           >
@@ -235,22 +242,29 @@ const About = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid class="row">
-            <Typography variant="h4">Our mission</Typography>
-            <Typography variant="body1">
-              We believe in teams. Yours and ours. Our mission, culture, and
-              commitment to fostering a diverse, inclusive workplace let us
-              build a product people love and stay true to ourselves. Lorem
-              ipsum dolor sit amet consectetur adipisicing elit. Corporis,
-              aperiam reprehenderit incidunt illo nemo nesciunt et doloribus quo
-              quisquam minus expedita natus saepe eos sequi fugit, voluptatibus
-              quas consequuntur. Eos. Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Iure culpa obcaecati quos dolores? Fugit quam ab
-              quidem nam officia omnis commodi architecto qui, incidunt et
-              quibusdam libero fugiat, expedita adipisci?
-            </Typography>
-          </Grid>
         </Grid>
+      </Container>
+      <Container
+        sx={{ background: "linear-gradient(70deg,#007880, #b5bdbe)", py: 12 }}
+        maxWidth={false}
+      >
+        <Box sx={{ maxWidth: "700px", mx: "auto", border: '2px solid purple', borderRadius: 2, py: 2 }}>
+          <Typography variant="h4" align='center'>
+            Our mission
+          </Typography>
+          <Typography variant="body1" align="center">
+            We believe in teams. Yours and ours. Our mission, culture, and
+            commitment to fostering a diverse, inclusive workplace let us build
+            a product people love and stay true to ourselves. Lorem ipsum dolor
+            sit amet consectetur adipisicing elit. Corporis, aperiam
+            reprehenderit incidunt illo nemo nesciunt et doloribus quo quisquam
+            minus expedita natus saepe eos sequi fugit, voluptatibus quas
+            consequuntur. Eos. Lorem ipsum dolor sit amet consectetur
+            adipisicing elit. Iure culpa obcaecati quos dolores? Fugit quam ab
+            quidem nam officia omnis commodi architecto qui, incidunt et
+            quibusdam libero fugiat, expedita adipisci?
+          </Typography>
+        </Box>
       </Container>
     </Stack>
   );
