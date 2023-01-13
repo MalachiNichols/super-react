@@ -11,9 +11,9 @@ const Footer = () => {
   return (
     <Container
       maxWidth={false}
-      sx={{ backgroundColor: theme.palette.secondary.light }}
+      sx={{ backgroundColor: theme.palette.secondary.light, position: 'absolute', bottom: 0, height: '7rem' }}
     >
-      <Box sx={{ mx: "auto", width: 400, mb: 2 }}>
+      <Box sx={{ mx: "auto", width: 500, my: 2 }}>
         <Grid xs container columns={12}>
           <Grid item xs align="center">
             <Link variant="body1" color="black" underline="hover" href="">
