@@ -24,6 +24,7 @@ const Home = () => {
         </Box>
         
       </Container>
+      <hr />
       <Container class="middle section">
         <Typography variant='h6' align='center'>How to use a Kanban Board?</Typography>
         <Box sx={{ mb: 2, mx: 'auto', width: 600, backgroundColor: 'purple', p: 5, borderRadius: 10}}>
@@ -39,6 +40,7 @@ const Home = () => {
           </Typography>
         </Box>
       </Container>
+      <hr />
       <Container class="section" style={{background: 'aliceblue'}}>
         <Typography variant='h6' align='center'>History of the Kanban Board</Typography>
         <Box sx={{ mb: 2, mx: 'auto', width: 600, backgroundColor: 'purple', p: 5, borderRadius: 10}}>
