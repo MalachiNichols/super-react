@@ -13,7 +13,6 @@ const TeamMember = ({ props }) => {
         <Typography variant="h5" component="div">
           {props.name}
         </Typography>
-        {/* <img src="assets/Jay.png" class="card-img-top" alt="jeanette" /> */}
         <Typography variant="h5" class="card-title">
           {props.jobTitle}
         </Typography>
