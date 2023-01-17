@@ -86,12 +86,14 @@ const About = () => {
         <Grid
           xs
           container
+          columnSpacing={0}
           sx={{
             minWidth: "100%",
             minHeight: 600,
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
+            alignItems: 'center'
           }}
         >
           <Grid
@@ -140,7 +142,6 @@ const About = () => {
               alignItems: "center",
               mx: 2,
             }}
-            class="card h-100"
           >
             <Card sx={{ width: 210 }}>
               <CardMedia
@@ -178,7 +179,6 @@ const About = () => {
               alignItems: "center",
               mx: 2,
             }}
-            class="card h-100"
           >
             <Card sx={{ width: 210 }}>
               <CardMedia
@@ -216,7 +216,6 @@ const About = () => {
               alignItems: "center",
               mx: 2,
             }}
-            class="card h-100"
           >
             <Card sx={{ width: 210 }}>
               <CardMedia
