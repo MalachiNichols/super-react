@@ -22,7 +22,7 @@ export default function Navbar() {
         <Toolbar>
           <div role="presentation" style={{ flex: 1 }}>
             <Breadcrumbs aria-label="breadcrumb">
-              <Typography color="text.primary">
+              <Typography color="white">
                 <FontAwesomeIcon
                   icon={faUserAstronaut}
                   color="white"

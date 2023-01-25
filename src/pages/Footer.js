@@ -54,8 +54,8 @@ const Footer = () => {
           src="assets/supernova.jpg"
           width="40px"
         ></Box>
-        <Link variant="h6" underline="hover" href="">
-          Supernova © 2022
+        <Link variant="h6" underline="hover" href="" sx={{color: 'white'}}>
+          Supernova © 2023
         </Link>
       </Box>
     </Container>
