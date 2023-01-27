@@ -39,6 +39,9 @@ export default function Navbar() {
               <Link underline="hover" color="inherit" href="/contact">
                 Contact
               </Link>
+              <Link underline="hover" color="inherit" href="/board">
+                Board
+              </Link>
             </Breadcrumbs>
           </div>
           <Button color="inherit" onClick={() => {navigate("/register")}}>Register</Button>
