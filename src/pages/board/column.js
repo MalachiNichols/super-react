@@ -13,7 +13,7 @@ const Column = ({ props }) => {
     <Card align="center" sx={{ minWidth: 250, pt: 2, border: '1px solid black'}}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {props.colName}
+            title {props.colName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Complete this form to Register!
