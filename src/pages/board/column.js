@@ -8,8 +8,8 @@ import Task from "./Task";
 const Column = ({ props }) => {
   const [saveButton, setSaveButton] = useState(false);
   const [createTask, setCreateTask] = useState(false);
-  const [newTask, setNewTask] = useState({ title: "hey", description: "" });
-  const [taskList, setTaskList] = useState([]);
+  const [newTask, setNewTask] = useState({ title: "", description: "" });
+  const [tasks, setTasks] = useState([]);
 
   const titleChange = (e) => {
     setSaveButton(true);
@@ -21,20 +21,31 @@ const Column = ({ props }) => {
 
   const saveTask = (e) => {
     setCreateTask(false);
-    console.log(newTask)
-    setTaskList(
-      taskList.concat(
-        <Task
-          props={{ title: newTask.title, description: newTask.description }}
-        />
-      )
+    setTasks(
+      tasks.concat({
+        title: newTask.title,
+        description: newTask.description,
+        id: tasks.length,
+      })
     );
+    console.log(tasks);
+  };
+
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+    console.log(tasks, id);
   };
 
   return (
     <Card
       align="center"
-      sx={{ minWidth: 250, pt: 2, border: "1px solid black", overflowY: 'auto' }}
+      sx={{
+        minWidth: 250,
+        pt: 2,
+        border: "1px solid black",
+        overflowY: "auto",
+        flex: 1,
+      }}
     >
       <CardContent>
         <Input
@@ -52,7 +63,17 @@ const Column = ({ props }) => {
             SAVE TITLE
           </Button>
         )}
-        {taskList}
+        {tasks[0] &&
+          tasks.map((task) => (
+            <Task
+              deleteTask={deleteTask}
+              props={{
+                title: task.title,
+                description: task.description,
+                id: task.id,
+              }}
+            />
+          ))}
         {createTask && (
           <CreateTask
             newTask={newTask}
@@ -74,19 +95,3 @@ const Column = ({ props }) => {
 };
 
 export default Column;
-
-// {
-//   /* <CardActions>
-//         <Button
-//           size="medium"
-//           sx={{
-//             color: "white",
-//             maxWidth: 100,
-//             mx: "auto",
-//             background: "linear-gradient(70deg,#007880, #b5bdbe)",
-//           }}
-//         >
-//           Submit
-//         </Button>
-//       </CardActions> */
-// }

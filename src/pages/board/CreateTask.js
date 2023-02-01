@@ -3,23 +3,18 @@ import SaveIcon from "@mui/icons-material/Save";
 import React from "react";
 
 const CreateTask = ({ newTask, setNewTask, saveTask }) => {
-
   const setTaskTitle = (e) => {
-    console.log(newTask)
-    setNewTask({...newTask, title: e.target.value})
-  }
+    setNewTask({ ...newTask, title: e.target.value });
+  };
 
   const setTaskDesc = (e) => {
-    setNewTask({...newTask, description: e.target.value})
-  }
+    setNewTask({ ...newTask, description: e.target.value });
+  };
 
   return (
-    <Card sx={{ mt: 1, maxWidth: 200}}>
+    <Card sx={{ mt: 1, maxWidth: 200 }}>
       <CardContent>
-        <TextField
-          label="Title"
-          onChange={setTaskTitle}
-        ></TextField>
+        <TextField label="Title" onChange={setTaskTitle}></TextField>
         <TextField
           label="Description"
           multiline
@@ -33,7 +28,7 @@ const CreateTask = ({ newTask, setNewTask, saveTask }) => {
           endIcon={<SaveIcon />}
           sx={{ mt: 1 }}
           onClick={() => {
-            saveTask()
+            saveTask();
           }}
         >
           SAVE TASK
