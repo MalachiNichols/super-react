@@ -1,11 +1,12 @@
-import { Card, CardContent, Button, Input } from "@mui/material";
+import { Card, CardContent, Button, Input, IconButton } from "@mui/material";
 import React, { useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import CreateTask from "./CreateTask";
 import Task from "./Task";
 
-const Column = ({ props }) => {
+const Column = ({ title, id, deleteColumn }) => {
   const [saveButton, setSaveButton] = useState(false);
   const [createTask, setCreateTask] = useState(false);
   const [newTask, setNewTask] = useState({ title: "", description: "" });
@@ -47,9 +48,17 @@ const Column = ({ props }) => {
         flex: 1,
       }}
     >
+      <IconButton
+          endIcon={<DeleteIcon />}
+          sx={{ mt: -2, float: 'right' }}
+          onClick={() => {
+            deleteColumn(id);
+          }}>
+            <DeleteIcon />
+        </IconButton>
       <CardContent>
         <Input
-          defaultValue={props.colName}
+          defaultValue={title}
           inputProps={{ style: { textAlign: "center" } }}
           onChange={titleChange}
         />
