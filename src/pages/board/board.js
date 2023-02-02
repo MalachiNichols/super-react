@@ -1,26 +1,28 @@
 import { Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import React, { useState } from "react";
+import React, { useState, useId } from "react";
 import Column from "./Column";
 import { Box } from "@mui/system";
 import CreateColumn from "./CreateColumn";
+import { v4 as uuidv4 } from "uuid";
 
 const Board = ({ id }) => {
   const [createColumn, setCreateColumn] = useState(false);
-  // const [newColumn, setNewColumn] = useState({});
-  const [columns, setColumns] = useState([{title: 1, id: 0}, {title: 2, id: 1}, {title: 3, id: 2}, {title: 4, id: 3}, {title: 5, id: 4} ])
+  const [columns, setColumns] = useState([
+    { title: 1, id: uuidv4() },
+    { title: 2, id: uuidv4() },
+    { title: 3, id: uuidv4() },
+    { title: 4, id: uuidv4() },
+    { title: 5, id: uuidv4() },
+  ]);
 
   const handleNewColumn = (title) => {
-    setColumns(
-      columns.concat({title: title, id: columns.length})
-    )
-  }
+    setColumns(columns.concat({ title: title, id: uuidv4() }));
+  };
 
   const deleteColumn = (id) => {
-    console.log(id + ' yo')
     setColumns(columns.filter((column) => column.id !== id));
-    console.log(columns)
-  }
+  };
 
   return (
     <Box sx={{ width: 1262, mx: "auto" }}>
@@ -45,9 +47,10 @@ const Board = ({ id }) => {
               <Column
                 title={column.title}
                 id={column.id}
+                key={column.id}
                 deleteColumn={deleteColumn}
               />
-          ))}
+            ))}
         </Grid>
       </Grid>
       {!createColumn && (

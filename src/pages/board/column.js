@@ -5,6 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateTask from "./CreateTask";
 import Task from "./Task";
+import { v4 as uuidv4 } from "uuid";
 
 const Column = ({ title, id, deleteColumn }) => {
   const [saveButton, setSaveButton] = useState(false);
@@ -26,15 +27,13 @@ const Column = ({ title, id, deleteColumn }) => {
       tasks.concat({
         title: newTask.title,
         description: newTask.description,
-        id: tasks.length,
+        id: uuidv4(),
       })
     );
-    console.log(tasks);
   };
 
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
-    console.log(tasks, id);
   };
 
   return (
@@ -49,13 +48,13 @@ const Column = ({ title, id, deleteColumn }) => {
       }}
     >
       <IconButton
-          endIcon={<DeleteIcon />}
-          sx={{ mt: -2, float: 'right' }}
-          onClick={() => {
-            deleteColumn(id);
-          }}>
-            <DeleteIcon />
-        </IconButton>
+        sx={{ mt: -2, float: "right" }}
+        onClick={() => {
+          deleteColumn(id);
+        }}
+      >
+        <DeleteIcon />
+      </IconButton>
       <CardContent>
         <Input
           defaultValue={title}
@@ -81,6 +80,7 @@ const Column = ({ title, id, deleteColumn }) => {
                 description: task.description,
                 id: task.id,
               }}
+              key={task.id}
             />
           ))}
         {createTask && (
