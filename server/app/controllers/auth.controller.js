@@ -109,6 +109,7 @@ exports.signup = (req, res) => {
  */
 exports.signin = (req, res) => {
   // find user
+  console.log(JSON.stringify(req.body) + 'aaaaaaaaaaaaaaaaaaaaaaaaah')
   db.any(`SELECT * FROM users WHERE name = $1`, [req.body.username])
     .then((user) => {
       
