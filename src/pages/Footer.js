@@ -14,7 +14,7 @@ const Footer = () => {
       sx={{ backgroundColor: theme.palette.secondary.light, position: 'absolute', bottom: 0, height: '7rem' }}
     >
       <Box sx={{ mx: "auto", width: 500, my: 2 }}>
-        <Grid xs container columns={12}>
+        <Grid container columns={12}>
           <Grid item xs align="center">
             <Link variant="body1" color="black" underline="hover" href="">
               Home
