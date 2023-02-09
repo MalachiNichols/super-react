@@ -7,11 +7,12 @@ import CreateTask from "./CreateTask";
 import Task from "./Task";
 import { v4 as uuidv4 } from "uuid";
 
-const Column = ({ title, id, deleteColumn }) => {
+const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
   const [saveButton, setSaveButton] = useState(false);
   const [createTask, setCreateTask] = useState(false);
   const [newTask, setNewTask] = useState({ title: "", description: "" });
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(oldTasks);
+  // console.log(oldTasks)
 
   const titleChange = (e) => {
     setSaveButton(true);
@@ -21,7 +22,7 @@ const Column = ({ title, id, deleteColumn }) => {
     setSaveButton(false);
   };
 
-  const saveTask = (e) => {
+  const saveTask = async (e) => {
     setCreateTask(false);
     setTasks(
       tasks.concat({
@@ -30,6 +31,27 @@ const Column = ({ title, id, deleteColumn }) => {
         id: uuidv4(),
       })
     );
+    await fetch("http://localhost:8080/api/tasks/create", {
+      method: "POST",
+      body: JSON.stringify({
+        boardName: "Your 1st Board",
+        task: {
+          name: newTask.title,
+          description: newTask.description,
+          column: 1,
+          placement: tasks.length + 1,
+          column: placement
+        },
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   const deleteTask = (id) => {
@@ -71,12 +93,13 @@ const Column = ({ title, id, deleteColumn }) => {
             SAVE TITLE
           </Button>
         )}
+        {console.log(JSON.stringify(tasks))}
         {tasks[0] &&
           tasks.map((task) => (
             <Task
               deleteTask={deleteTask}
               props={{
-                title: task.title,
+                title: task.name,
                 description: task.description,
                 id: task.id,
               }}

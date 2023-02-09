@@ -9,6 +9,30 @@ import { v4 as uuidv4 } from "uuid";
 const Board = ({ id }) => {
   const [createColumn, setCreateColumn] = useState(false);
   const [columns, setColumns] = useState([]);
+  const [oldTasks, setOldTasks] = useState([
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ]);
+  // const map = new Map([]);
+  console.log(oldTasks[1] + "hey dummy");
 
   const checkCredentials = async () => {
     await fetch("http://localhost:8080/api/boards/get", {
@@ -28,13 +52,19 @@ const Board = ({ id }) => {
           alert("Board does not exist");
         } else {
           res.json().then((data) => {
-            let temp = []
+            let temp = [];
             for (let i = 0; i < data.columns.length; i++) {
-              temp.push({ title: data.columns[i].name, id: uuidv4() })
+              temp.push({ title: data.columns[i].name, id: uuidv4() });
             }
-            setColumns(
-              temp
-            );
+            data.tasks.map((task) => {
+              setOldTasks( prevState => {
+                const copy = prevState.slice()
+                copy[task.placement - 1].push(task)
+                return copy
+              });
+              console.log("oldTasks " + JSON.stringify(oldTasks[0]));
+            });
+            setColumns(temp);
           });
         }
       })
@@ -71,14 +101,19 @@ const Board = ({ id }) => {
       >
         <Grid container wrap="nowrap" sx={{ mx: "auto", width: "100%" }}>
           {columns[0] &&
-            columns.map((column) => (
-              <Column
-                title={column.title}
-                id={column.id}
-                key={column.id}
-                deleteColumn={deleteColumn}
-              />
-            ))}
+            columns.map((column, i) => {
+              console.log("yoooo " + oldTasks[i] + i);
+              return (
+                <Column
+                  title={column.title}
+                  id={column.id}
+                  key={column.id}
+                  deleteColumn={deleteColumn}
+                  oldTasks={oldTasks[i]}
+                  placement={i + 1}
+                />
+              );
+            })}
         </Grid>
       </Grid>
       {!createColumn && (
