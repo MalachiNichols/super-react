@@ -59,7 +59,7 @@ const Board = ({ id }) => {
             data.tasks.map((task) => {
               setOldTasks( prevState => {
                 const copy = prevState.slice()
-                copy[task.placement - 1].push(task)
+                copy[task.column - 1].push(task)
                 return copy
               });
               console.log("oldTasks " + JSON.stringify(oldTasks[0]));

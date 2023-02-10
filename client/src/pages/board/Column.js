@@ -8,6 +8,11 @@ import Task from "./Task";
 import { v4 as uuidv4 } from "uuid";
 
 const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
+  if(oldTasks){
+    oldTasks.map(task => {
+      task.id = uuidv4()
+    })
+  }
   const [saveButton, setSaveButton] = useState(false);
   const [createTask, setCreateTask] = useState(false);
   const [newTask, setNewTask] = useState({ title: "", description: "" });
@@ -26,7 +31,7 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
     setCreateTask(false);
     setTasks(
       tasks.concat({
-        title: newTask.title,
+        name: newTask.title,
         description: newTask.description,
         id: uuidv4(),
       })
