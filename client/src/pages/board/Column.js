@@ -59,8 +59,33 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
       .catch((err) => console.log(err));
   };
 
-  const deleteTask = (id) => {
+  const deleteTask = async (id) => {
+    console.log(tasks)
     setTasks(tasks.filter((task) => task.id !== id));
+    let deleteTask
+    tasks.map(x => {
+      if(x.id == id){
+        deleteTask = x
+      }
+    })
+    await fetch("http://localhost:8080/api/tasks/delete", {
+      method: "DELETE",
+      body: JSON.stringify({
+        boardName: "Your 1st Board",
+        task: {
+          placement: deleteTask.placement,
+          column: placement
+        }
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch((err) => console.log(err));
   };
 
   return (
