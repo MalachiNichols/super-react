@@ -17,36 +17,36 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
   const [createTask, setCreateTask] = useState(false);
   const [newTask, setNewTask] = useState({ title: "", description: "" });
   const [tasks, setTasks] = useState(oldTasks);
-  const [newTitle, setNewTitle] = useState('')
+  const [newTitle, setNewTitle] = useState("");
 
   const titleChange = (e) => {
     setSaveButton(true);
-    setNewTitle(e.target.value)
+    setNewTitle(e.target.value);
   };
 
   const saveTitle = async () => {
     setSaveButton(false);
-    await fetch('http://localhost:8080/api/columns/update', {
-      method: 'PATCH',
+    await fetch("http://localhost:8080/api/columns/update", {
+      method: "PATCH",
       body: JSON.stringify({
-        boardName: 'Your 1st Board',
+        boardName: "Your 1st Board",
         column: {
-          placement: placement
+          placement: placement,
         },
         newColumn: {
           name: newTitle,
-          placement: placement
-        }
+          placement: placement,
+        },
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
         authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
     })
-    .then(res => {
-      console.log(res)
-    })
-    .catch((err) => console.log(err));
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   const saveTask = async (e) => {
@@ -155,7 +155,7 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
                 description: task.description,
                 id: task.id,
                 placement: task.placement,
-                column: placement
+                column: placement,
               }}
               key={task.id}
             />

@@ -1,52 +1,59 @@
-import { Button, Card, CardContent, IconButton, Typography, Input, TextField } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  Typography,
+  Input,
+  TextField,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import React, { useState } from "react";
 
 const Task = ({ props, deleteTask }) => {
-
   const [saveButton, setSaveButton] = useState(false);
-  const [newTitle, setNewTitle] = useState(props.title)
-  const [newDesc, setNewDesc] = useState(props.description)
+  const [newTitle, setNewTitle] = useState(props.title);
+  const [newDesc, setNewDesc] = useState(props.description);
 
   const titleChange = (e) => {
-    setSaveButton(true)
-    setNewTitle(e.target.value)
-  }
+    setSaveButton(true);
+    setNewTitle(e.target.value);
+  };
 
   const descChange = (e) => {
-    setSaveButton(true)
-    setNewDesc(e.target.value)
-  }
+    setSaveButton(true);
+    setNewDesc(e.target.value);
+  };
 
   const saveTask = async () => {
-    setSaveButton(false)
-    await fetch('http://localhost:8080/api/tasks/update', {
-      method: 'PATCH',
+    setSaveButton(false);
+    await fetch("http://localhost:8080/api/tasks/update", {
+      method: "PATCH",
       body: JSON.stringify({
         boardName: "Your 1st Board",
         task: {
           placement: props.placement,
-          column: props.placement
+          column: props.placement,
         },
         changedTask: {
           name: newTitle,
           description: newDesc,
           placement: props.placement,
           column: props.column,
-          color: ''
-        }
+          color: "",
+        },
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
         authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
     })
-    .then(res => {
-      console.log(res)
-    })
-    .catch((err) => console.log(err));
-  }
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Card sx={{ mt: 1 }}>
@@ -61,13 +68,13 @@ const Task = ({ props, deleteTask }) => {
         </IconButton>
         <Input
           defaultValue={props.title}
-          inputProps={{ style: { textAlign: "center" }, spellCheck: 'false' }}
+          inputProps={{ style: { textAlign: "center" }, spellCheck: "false" }}
           onChange={titleChange}
         />
         <TextField
           defaultValue={props.description}
           multiline
-          inputProps={{ spellCheck: 'false' }}
+          inputProps={{ spellCheck: "false" }}
           maxRows={4}
           onChange={descChange}
         />

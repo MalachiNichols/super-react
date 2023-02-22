@@ -52,13 +52,17 @@ const Board = ({ id }) => {
           res.json().then((data) => {
             let temp = [];
             for (let i = 0; i < data.columns.length; i++) {
-              temp.push({ title: data.columns[i].name, id: uuidv4() });
+              temp.push({
+                title: data.columns[i].name,
+                placement: data.columns[i].placement,
+                id: uuidv4(),
+              });
             }
             data.tasks.map((task) => {
-              setOldTasks( prevState => {
-                const copy = prevState.slice()
-                copy[task.column - 1].push(task)
-                return copy
+              setOldTasks((prevState) => {
+                const copy = prevState.slice();
+                copy[task.column - 1].push(task);
+                return copy;
               });
             });
             setColumns(temp);
@@ -72,12 +76,51 @@ const Board = ({ id }) => {
     checkCredentials();
   }, []);
 
-  const handleNewColumn = (title) => {
+  const handleNewColumn = async (title) => {
     setColumns(columns.concat({ title: title, id: uuidv4() }));
+    await fetch("http://localhost:8080/api/columns/add", {
+      method: "POST",
+      body: JSON.stringify({
+        boardName: "Your 1st Board",
+        column: {
+          name: title,
+        },
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
-  const deleteColumn = (id) => {
+  const deleteColumn = async (id) => {
+    let deleteCol;
+    columns.map((x) => {
+      if (x.id == id) {
+        deleteCol = x;
+      }
+    });
+    console.log(deleteCol);
     setColumns(columns.filter((column) => column.id !== id));
+    await fetch("http://localhost:8080/api/columns/delete", {
+      method: "DELETE",
+      body: JSON.stringify({
+        boardName: "Your 1st Board",
+        column: {
+          placement: deleteCol.placement,
+        },
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
