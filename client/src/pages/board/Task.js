@@ -61,12 +61,13 @@ const Task = ({ props, deleteTask }) => {
         </IconButton>
         <Input
           defaultValue={props.title}
-          inputProps={{ style: { textAlign: "center" } }}
+          inputProps={{ style: { textAlign: "center" }, spellCheck: 'false' }}
           onChange={titleChange}
         />
         <TextField
           defaultValue={props.description}
           multiline
+          inputProps={{ spellCheck: 'false' }}
           maxRows={4}
           onChange={descChange}
         />
@@ -80,13 +81,6 @@ const Task = ({ props, deleteTask }) => {
             SAVE TASK
           </Button>
         )}
-        {/* <Typography variant="h6">{props.title}</Typography>
-        <Typography
-          variant="body1"
-          sx={{ wordWrap: "break-word", textAlign: "left" }}
-        >
-          {props.description}
-        </Typography> */}
       </CardContent>
     </Card>
   );

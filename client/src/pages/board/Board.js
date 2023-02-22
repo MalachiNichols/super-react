@@ -31,8 +31,6 @@ const Board = ({ id }) => {
     [],
     [],
   ]);
-  // const map = new Map([]);
-  console.log(oldTasks[1] + "hey dummy");
 
   const checkCredentials = async () => {
     await fetch("http://localhost:8080/api/boards/get", {
@@ -62,7 +60,6 @@ const Board = ({ id }) => {
                 copy[task.column - 1].push(task)
                 return copy
               });
-              console.log("oldTasks " + JSON.stringify(oldTasks[0]));
             });
             setColumns(temp);
           });
@@ -102,7 +99,6 @@ const Board = ({ id }) => {
         <Grid container wrap="nowrap" sx={{ mx: "auto", width: "100%" }}>
           {columns[0] &&
             columns.map((column, i) => {
-              console.log("yoooo " + oldTasks[i] + i);
               return (
                 <Column
                   title={column.title}

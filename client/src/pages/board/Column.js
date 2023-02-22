@@ -18,11 +18,9 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
   const [newTask, setNewTask] = useState({ title: "", description: "" });
   const [tasks, setTasks] = useState(oldTasks);
   const [newTitle, setNewTitle] = useState('')
-  // console.log(oldTasks)
 
   const titleChange = (e) => {
     setSaveButton(true);
-    console.log(e.target.value)
     setNewTitle(e.target.value)
   };
 
@@ -86,7 +84,6 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
   };
 
   const deleteTask = async (id) => {
-    console.log(tasks);
     setTasks(tasks.filter((task) => task.id !== id));
     let deleteTask;
     tasks.map((x) => {
@@ -94,7 +91,6 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
         deleteTask = x;
       }
     });
-    console.log("deleteTask is " + JSON.stringify(deleteTask));
     await fetch("http://localhost:8080/api/tasks/delete", {
       method: "DELETE",
       body: JSON.stringify({
@@ -150,7 +146,6 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
             SAVE TITLE
           </Button>
         )}
-        {console.log(JSON.stringify(tasks))}
         {tasks[0] &&
           tasks.map((task) => (
             <Task
