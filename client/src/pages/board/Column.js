@@ -33,6 +33,8 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
       tasks.concat({
         name: newTask.title,
         description: newTask.description,
+        column: placement,
+        placement: tasks.length + 1,
         id: uuidv4(),
       })
     );
@@ -68,6 +70,7 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
         deleteTask = x
       }
     })
+    console.log('deleteTask is ' + JSON.stringify(deleteTask))
     await fetch("http://localhost:8080/api/tasks/delete", {
       method: "DELETE",
       body: JSON.stringify({
