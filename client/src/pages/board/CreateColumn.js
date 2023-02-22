@@ -4,20 +4,19 @@ import React, { useState } from "react";
 import { Box } from "@mui/system";
 
 const CreateColumn = ({ handleNewColumn, setCreateColumn }) => {
-
-  const [textValue, setTextValue] = useState('')
+  const [textValue, setTextValue] = useState("");
 
   const handleTextChange = (e) => {
-    setTextValue(e.target.value)
-  }
+    setTextValue(e.target.value);
+  };
 
   return (
     <Box sx={{ float: "right", mt: 1 }}>
-      <TextField size="small" label="Column Name" onChange={handleTextChange}/>
+      <TextField size="small" label="Column Name" onChange={handleTextChange} />
       <Button
         startIcon={<SaveIcon />}
         onClick={() => {
-          handleNewColumn(textValue)
+          handleNewColumn(textValue);
           setCreateColumn(false);
         }}
       >
