@@ -7,33 +7,108 @@ import CreateTask from "./CreateTask";
 import Task from "./Task";
 import { v4 as uuidv4 } from "uuid";
 
-const Column = ({ title, id, deleteColumn }) => {
+const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
+  if (oldTasks) {
+    oldTasks.map((task) => {
+      task.id = uuidv4();
+    });
+  }
   const [saveButton, setSaveButton] = useState(false);
   const [createTask, setCreateTask] = useState(false);
   const [newTask, setNewTask] = useState({ title: "", description: "" });
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(oldTasks);
+  const [newTitle, setNewTitle] = useState('')
 
   const titleChange = (e) => {
     setSaveButton(true);
+    setNewTitle(e.target.value)
   };
 
-  const saveTitle = (e) => {
+  const saveTitle = async () => {
     setSaveButton(false);
+    await fetch('http://localhost:8080/api/columns/update', {
+      method: 'PATCH',
+      body: JSON.stringify({
+        boardName: 'Your 1st Board',
+        column: {
+          placement: placement
+        },
+        newColumn: {
+          name: newTitle,
+          placement: placement
+        }
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch((err) => console.log(err));
   };
 
-  const saveTask = (e) => {
+  const saveTask = async (e) => {
     setCreateTask(false);
     setTasks(
       tasks.concat({
-        title: newTask.title,
+        name: newTask.title,
         description: newTask.description,
+        column: placement,
+        placement: tasks.length + 1,
         id: uuidv4(),
       })
     );
+    await fetch("http://localhost:8080/api/tasks/create", {
+      method: "POST",
+      body: JSON.stringify({
+        boardName: "Your 1st Board",
+        task: {
+          name: newTask.title,
+          description: newTask.description,
+          column: 1,
+          placement: tasks.length + 1,
+          column: placement,
+        },
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
-  const deleteTask = (id) => {
+  const deleteTask = async (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
+    let deleteTask;
+    tasks.map((x) => {
+      if (x.id == id) {
+        deleteTask = x;
+      }
+    });
+    await fetch("http://localhost:8080/api/tasks/delete", {
+      method: "DELETE",
+      body: JSON.stringify({
+        boardName: "Your 1st Board",
+        task: {
+          placement: deleteTask.placement,
+          column: placement,
+        },
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -76,9 +151,11 @@ const Column = ({ title, id, deleteColumn }) => {
             <Task
               deleteTask={deleteTask}
               props={{
-                title: task.title,
+                title: task.name,
                 description: task.description,
                 id: task.id,
+                placement: task.placement,
+                column: placement
               }}
               key={task.id}
             />

@@ -1,6 +1,6 @@
 import { Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import React, { useState, useId } from "react";
+import React, { useState, useEffect } from "react";
 import Column from "./Column";
 import { Box } from "@mui/system";
 import CreateColumn from "./CreateColumn";
@@ -8,13 +8,69 @@ import { v4 as uuidv4 } from "uuid";
 
 const Board = ({ id }) => {
   const [createColumn, setCreateColumn] = useState(false);
-  const [columns, setColumns] = useState([
-    { title: 1, id: uuidv4() },
-    { title: 2, id: uuidv4() },
-    { title: 3, id: uuidv4() },
-    { title: 4, id: uuidv4() },
-    { title: 5, id: uuidv4() },
+  const [columns, setColumns] = useState([]);
+  const [oldTasks, setOldTasks] = useState([
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
   ]);
+
+  const checkCredentials = async () => {
+    await fetch("http://localhost:8080/api/boards/get", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      body: JSON.stringify({
+        boardName: "Your 1st Board",
+      }),
+    })
+      .then((res) => {
+        if (res.status == 401) {
+          alert("Please sign in!");
+        } else if (res.status == 400) {
+          alert("Board does not exist");
+        } else {
+          res.json().then((data) => {
+            let temp = [];
+            for (let i = 0; i < data.columns.length; i++) {
+              temp.push({ title: data.columns[i].name, id: uuidv4() });
+            }
+            data.tasks.map((task) => {
+              setOldTasks( prevState => {
+                const copy = prevState.slice()
+                copy[task.column - 1].push(task)
+                return copy
+              });
+            });
+            setColumns(temp);
+          });
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    checkCredentials();
+  }, []);
 
   const handleNewColumn = (title) => {
     setColumns(columns.concat({ title: title, id: uuidv4() }));
@@ -41,16 +97,19 @@ const Board = ({ id }) => {
         }}
       >
         <Grid container wrap="nowrap" sx={{ mx: "auto", width: "100%" }}>
-          {/* <Workspace /> */}
           {columns[0] &&
-            columns.map((column) => (
-              <Column
-                title={column.title}
-                id={column.id}
-                key={column.id}
-                deleteColumn={deleteColumn}
-              />
-            ))}
+            columns.map((column, i) => {
+              return (
+                <Column
+                  title={column.title}
+                  id={column.id}
+                  key={column.id}
+                  deleteColumn={deleteColumn}
+                  oldTasks={oldTasks[i]}
+                  placement={i + 1}
+                />
+              );
+            })}
         </Grid>
       </Grid>
       {!createColumn && (
