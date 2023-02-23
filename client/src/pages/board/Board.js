@@ -1,14 +1,17 @@
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import React, { useState, useEffect } from "react";
 import Column from "./Column";
 import { Box } from "@mui/system";
 import CreateColumn from "./CreateColumn";
 import { v4 as uuidv4 } from "uuid";
+import Workspace from "./Workspace";
 
 const Board = ({ id }) => {
   const [createColumn, setCreateColumn] = useState(false);
   const [columns, setColumns] = useState([]);
+  const [boards, setBoards] = useState([])
+  const [currBoard, setCurrentBoard] = useState("");
   const [oldTasks, setOldTasks] = useState([
     [],
     [],
@@ -32,7 +35,7 @@ const Board = ({ id }) => {
     [],
   ]);
 
-  const checkCredentials = async () => {
+  const checkCredentials = async (e) => {
     await fetch("http://localhost:8080/api/boards/get", {
       method: "POST",
       headers: {
@@ -40,7 +43,7 @@ const Board = ({ id }) => {
         authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
       body: JSON.stringify({
-        boardName: "Your 1st Board",
+        boardName: e.target.innerHTML,
       }),
     })
       .then((res) => {
@@ -72,8 +75,25 @@ const Board = ({ id }) => {
       .catch((err) => console.log(err));
   };
 
+  const findBoards = async () => {
+    await fetch("http://localhost:8080/api/boards/getmultiple", {
+      method: "GET",
+      headers: {
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    })
+    .then(res => {
+      res.json().then(data => {
+        console.log(data)
+        setBoards(data)
+      })
+    })
+    .catch(err => console.log(err))
+  };
+
   useEffect(() => {
-    checkCredentials();
+    findBoards()
+    // checkCredentials();
   }, []);
 
   const handleNewColumn = async (title) => {
@@ -124,55 +144,62 @@ const Board = ({ id }) => {
   };
 
   return (
-    <Box sx={{ width: 1262, mx: "auto" }}>
-      <Grid
-        container
-        justifyContent="center"
-        wrap="nowrap"
-        sx={{
-          border: "1px solid black",
-          width: 1262,
-          mx: "auto",
-          mt: 5,
-          overflowX: "auto",
-          overflowY: "hidden",
-          height: 500,
-        }}
-      >
-        <Grid container wrap="nowrap" sx={{ mx: "auto", width: "100%" }}>
-          {columns[0] &&
-            columns.map((column, i) => {
-              return (
-                <Column
-                  title={column.title}
-                  id={column.id}
-                  key={column.id}
-                  deleteColumn={deleteColumn}
-                  oldTasks={oldTasks[i]}
-                  placement={i + 1}
-                />
-              );
-            })}
-        </Grid>
-      </Grid>
-      {!createColumn && (
-        <Button
-          startIcon={<AddIcon />}
-          sx={{ float: "right", mt: 1 }}
-          onClick={() => {
-            setCreateColumn(true);
+    <>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+        <Typography variant="h3">Current Board</Typography>
+      </Box>
+      <Box sx={{ width: 1262, mx: "auto" }}>
+        <Grid
+          container
+          justifyContent="center"
+          wrap="nowrap"
+          sx={{
+            border: "1px solid black",
+            width: 1262,
+            mx: "auto",
+            mt: 5,
+            overflowX: "auto",
+            overflowY: "hidden",
+            height: 500,
           }}
         >
-          COLUMN
-        </Button>
-      )}
-      {createColumn && (
-        <CreateColumn
-          handleNewColumn={handleNewColumn}
-          setCreateColumn={setCreateColumn}
-        />
-      )}
-    </Box>
+          <Workspace checkCredentials={checkCredentials} boards={boards}/>
+
+          <Grid container wrap="nowrap" sx={{ mx: "auto", width: "100%" }}>
+            {columns[0] &&
+              columns.map((column, i) => {
+                return (
+                  <Column
+                    title={column.title}
+                    id={column.id}
+                    key={column.id}
+                    deleteColumn={deleteColumn}
+                    oldTasks={oldTasks[i]}
+                    placement={i + 1}
+                  />
+                );
+              })}
+          </Grid>
+        </Grid>
+        {!createColumn && (
+          <Button
+            startIcon={<AddIcon />}
+            sx={{ float: "right", mt: 1 }}
+            onClick={() => {
+              setCreateColumn(true);
+            }}
+          >
+            COLUMN
+          </Button>
+        )}
+        {createColumn && (
+          <CreateColumn
+            handleNewColumn={handleNewColumn}
+            setCreateColumn={setCreateColumn}
+          />
+        )}
+      </Box>
+    </>
   );
 };
 
