@@ -3,10 +3,11 @@ import {
   List,
   ListItem,
   ListItemText,
-  Typography,
   Button,
+  IconButton,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import CreateBoard from "./CreateBoard";
 import React, { useState } from "react";
 
@@ -21,7 +22,7 @@ const Workspace = ({ checkCredentials, boards, setBoards }) => {
         boardName: title,
         columns: [
           {
-            name: "BackLog",
+            name: "Backlog",
             placement: 1,
           },
           {
@@ -47,7 +48,26 @@ const Workspace = ({ checkCredentials, boards, setBoards }) => {
         authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
     })
-    .then(res => console.log(res))
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  const deleteBoard = async (title) => {
+    console.log(title);
+    await fetch('http://localhost:8080/api/boards/delete', {
+      method: 'DELETE',
+      body: JSON.stringify({
+        boardName: title
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    })
+    .then(res => {
+      console.log(res)
+      setBoards(boards.filter((board) => board != title))
+    })
     .catch(err => console.log(err))
   };
 
@@ -69,10 +89,26 @@ const Workspace = ({ checkCredentials, boards, setBoards }) => {
                 checkCredentials(e);
               }}
             />
+            <div
+              onClick={(e) => {
+                deleteBoard(
+                  e.currentTarget.previousElementSibling.firstChild.innerHTML
+                );
+              }}
+            >
+              <IconButton sx={{ mt: -2, float: "right" }}>
+                <DeleteIcon />
+              </IconButton>
+            </div>
           </ListItem>
         ))}
       </List>
-      {createBoard && <CreateBoard handleNewBoard={handleNewBoard} setCreateBoard={setCreateBoard}/>}
+      {createBoard && (
+        <CreateBoard
+          handleNewBoard={handleNewBoard}
+          setCreateBoard={setCreateBoard}
+        />
+      )}
       <Button
         sx={{ width: 100, ml: "75px" }}
         startIcon={<AddIcon />}
