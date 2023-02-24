@@ -1,4 +1,4 @@
-const { getBoard, saveBoard, updateBoard, deleteBoard } = require('../controllers/board.controller')
+const { getBoard, getMultipleBoard, saveBoard, updateBoard, deleteBoard } = require('../controllers/board.controller')
 const { verifyUserToken } = require('../middleware/verifyUser')
 
 module.exports = function (app) {
@@ -14,6 +14,15 @@ module.exports = function (app) {
      * @param {JSON Object} res - result object 
      */
     app.post('/api/boards/get', verifyUserToken, getBoard)
+    
+    /**
+     * GET MULTIPLE BOARDS ENDPOINT
+     * @param {JSON Object} req.headers - HTTP header data
+     * @param {string} req.headers.authorization - access token prefixed with "Bearer" keyword
+     *                                             form: "Bearer access-token-here"
+     * @param {JSON Object} res - result object 
+     */
+    app.get('/api/boards/getmultiple', verifyUserToken, getMultipleBoard)
 
     /**
      * SAVE BOARD ENDPOINT

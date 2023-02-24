@@ -7,7 +7,7 @@ import CreateTask from "./CreateTask";
 import Task from "./Task";
 import { v4 as uuidv4 } from "uuid";
 
-const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
+const Column = ({ title, id, deleteColumn, placement, oldTasks, currBoard }) => {
   if (oldTasks) {
     oldTasks.map((task) => {
       task.id = uuidv4();
@@ -29,7 +29,7 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
     await fetch("http://localhost:8080/api/columns/update", {
       method: "PATCH",
       body: JSON.stringify({
-        boardName: "Your 1st Board",
+        boardName: currBoard,
         column: {
           placement: placement,
         },
@@ -63,11 +63,10 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
     await fetch("http://localhost:8080/api/tasks/create", {
       method: "POST",
       body: JSON.stringify({
-        boardName: "Your 1st Board",
+        boardName: currBoard,
         task: {
           name: newTask.title,
           description: newTask.description,
-          column: 1,
           placement: tasks.length + 1,
           column: placement,
         },
@@ -94,7 +93,7 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
     await fetch("http://localhost:8080/api/tasks/delete", {
       method: "DELETE",
       body: JSON.stringify({
-        boardName: "Your 1st Board",
+        boardName: currBoard,
         task: {
           placement: deleteTask.placement,
           column: placement,
@@ -158,6 +157,7 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks }) => {
                 column: placement,
               }}
               key={task.id}
+              currBoard={currBoard}
             />
           ))}
         {createTask && (

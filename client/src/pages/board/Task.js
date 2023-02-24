@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import React, { useState } from "react";
 
-const Task = ({ props, deleteTask }) => {
+const Task = ({ props, deleteTask, currBoard }) => {
   const [saveButton, setSaveButton] = useState(false);
   const [newTitle, setNewTitle] = useState(props.title);
   const [newDesc, setNewDesc] = useState(props.description);
@@ -31,10 +31,10 @@ const Task = ({ props, deleteTask }) => {
     await fetch("http://localhost:8080/api/tasks/update", {
       method: "PATCH",
       body: JSON.stringify({
-        boardName: "Your 1st Board",
+        boardName: currBoard,
         task: {
           placement: props.placement,
-          column: props.placement,
+          column: props.column,
         },
         changedTask: {
           name: newTitle,

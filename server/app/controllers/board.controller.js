@@ -2,12 +2,12 @@ const { db } = require("../config/db.config");
 
 /**
  * Get board controller
- * 
+ *
  * This controller finds a board in the db and returns it to
- *  the frontend. This is done by procedurally adding board 
+ *  the frontend. This is done by procedurally adding board
  *  items (columns and tasks) to an object called boardObject.
  *  boardObject is returned to the frontend for rendering.
- * 
+ *
  * @param {JSON Object} req - http request data
  * @param {JSON Object} req.body - identifiers of board being requested
  * @param {JSON Object} res - result object
@@ -28,7 +28,6 @@ exports.getBoard = (req, res) => {
         req.userID,
       ])
       .then((workspace) => {
-        
         // Find board and insert into boardObject
         return t
           .one(
@@ -44,11 +43,10 @@ exports.getBoard = (req, res) => {
                 board.board_id,
               ])
               .then((columns) => {
-                
                 // Sort columns in placement order for boardObject
                 columns.sort(function compare(a, b) {
-                  return (a.column_placement - b.column_placement)
-                })
+                  return a.column_placement - b.column_placement;
+                });
                 // Add columns to boardObject
                 columns.map((column) => {
                   boardObject.columns.push({
@@ -70,10 +68,8 @@ exports.getBoard = (req, res) => {
 
                   // Map over all tasks grouped by columns
                   allTasks.map((columnOfTasks) => {
-                    
                     // Map over tasks in each column
                     columnOfTasks.map((task) => {
-                      
                       // Add tasks to boardObject
                       boardObject.tasks.push({
                         name: task.task_name,
@@ -106,130 +102,144 @@ exports.getBoard = (req, res) => {
 };
 
 /**
+ * Get multiple board controller
+ *
+ * This controller finds a board in the db and returns it to
+ *  the frontend. This is done by procedurally adding board
+ *  items (columns and tasks) to an object called boardObject.
+ *  boardObject is returned to the frontend for rendering.
+ *
+ * @param {JSON Object} req - http request data
+ * @param {JSON Object} res - result object
+ */
+exports.getMultipleBoard = (req, res) => {
+  let boardNames = [];
+  db.tx("getBoard-transaction", (t) => {
+    // t = transaction instance
+
+    // Find workspace id
+    return t
+      .one("SELECT workspace_id FROM workspaces WHERE owner_id = $1", [
+        req.userID,
+      ])
+      .then((workspace) => {
+        return t
+          .any("SELECT board_name FROM boards WHERE workspace_id = $1", [
+            workspace.workspace_id,
+          ])
+          .then((boards) => {
+            boards.map((board) => {
+              boardNames.push(board.board_name);
+            });
+          });
+      });
+  }).then(() => {
+    console.log("names are " + JSON.stringify(boardNames));
+    res.status(200).send(JSON.stringify(boardNames));
+  });
+};
+
+/**
  * Save board controller
- * 
+ *
  * This controller creates a new board with example columns and tasks.
- *  This is done by inserting entries into tables such as boards, 
- *  columns, and tasks. 
- * 
+ *  This is done by inserting entries into tables such as boards,
+ *  columns, and tasks.
+ *
  * @param {JSON Object} req - http request data
  * @param {JSON Object} req.body - all data to be stored including: board data, column data, and task data
  * @param {JSON Object} res - result object
  */
 exports.saveBoard = (req, res) => {
-
   // Starting save transaction
   db.tx("saveBoard-transaction", (t) => {
     // t = transaction instance
 
     // Find workspaceID
-    return (
-      t
-        .one("SELECT workspace_id FROM workspaces WHERE owner_id = $1", [
-          req.userID,
-        ])
-        .then((workspace) => {
-          
-          // Insert board into db
-          return t
-            .one(
-              "INSERT INTO boards(board_name, workspace_id) VALUES($1, $2) RETURNING board_id",
-              [req.body.boardName, workspace.workspace_id]
-            )
-            .then((board) => {
-              
-              // Map over columns and insert them into the db with board_id from previous query
-              const col_queries = req.body.columns.map((col) => {
-                return t.one(
-                  "INSERT INTO columns(column_name, column_placement, board_id) VALUES($1, $2, $3) RETURNING column_id",
-                  [col.name, col.placement, board.board_id]
-                );
-              });
-
-              // Batch results from map queries to resolve promises
-              return t.batch(col_queries).then((col_ids) => {
-                
-                // Map over tasks and insert them into the db with column_ids from previous queries
-                const task_queries = req.body.tasks.map((task) => {
-                  return t.none(
-                    "INSERT INTO tasks(task_name, description, task_placement, color, creator_id, column_id, column_number) VALUES($1, $2, $3, $4, $5, $6, $7)",
-                    [
-                      task.name,
-                      task.description,
-                      task.placement,
-                      task.color,
-                      req.userID,
-                      col_ids[task.column - 1].column_id,
-                      task.column,
-                    ]
-                  );
-                });
-
-                // Batch results to resolve promises
-                return t.batch(task_queries);
-              });
+    return t
+      .one("SELECT workspace_id FROM workspaces WHERE owner_id = $1", [
+        req.userID,
+      ])
+      .then((workspace) => {
+        // Insert board into db
+        return t
+          .one(
+            "INSERT INTO boards(board_name, workspace_id) VALUES($1, $2) RETURNING board_id",
+            [req.body.boardName, workspace.workspace_id]
+          )
+          .then((board) => {
+            // Map over columns and insert them into the db with board_id from previous query
+            const col_queries = req.body.columns.map((col) => {
+              return t.one(
+                "INSERT INTO columns(column_name, column_placement, board_id) VALUES($1, $2, $3) RETURNING column_id",
+                [col.name, col.placement, board.board_id]
+              );
             });
-        })
 
-        // Success
-        .then((data) => {
-          console.log("transaction succesful ", data);
-          res.status(200).send({ message: "Board saved succesfully" });
-        })
+            // Batch results from map queries to resolve promises
+            return t.batch(col_queries);
+          });
+      });
+  })
 
-        // Fail
-        .catch((err) => {
-          console.log(err)
-          res.status(500).send({message: "Server error"})
-        })
-    );
-  });
+    // Success
+    .then((data) => {
+      console.log("transaction succesful ", data);
+      res.status(200).send({ message: "Board saved succesfully" });
+    })
+
+    // Fail
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({ message: "Server error" });
+    });
 };
 
 /**
  * Update board controller
- * 
+ *
  * This controller updates the title of a board. This is done with a simple
  *  update sql query.
- * 
+ *
  * @param {JSON Object} req - http request data
  * @param {JSON Object} req.body - identifiers to locate requested board and changed content
  * @param {JSON Object} res - result object
  */
 exports.updateBoard = (req, res) => {
-  
   // Start update board transaction
   db.tx("updateBoard-transaction", (t) => {
-    
     // Find workspace id
-    return t.one('SELECT * FROM workspaces WHERE owner_id = $1', [req.userID])
-      .then(workspace => {
-        
+    return t
+      .one("SELECT * FROM workspaces WHERE owner_id = $1", [req.userID])
+      .then((workspace) => {
         // Update board name
-        return t.none('UPDATE boards SET board_name = $1 WHERE workspace_id = $2 AND board_name = $3', [req.body.newBoardName, workspace.workspace_id, req.body.boardName])
-      })
+        return t.none(
+          "UPDATE boards SET board_name = $1 WHERE workspace_id = $2 AND board_name = $3",
+          [req.body.newBoardName, workspace.workspace_id, req.body.boardName]
+        );
+      });
   })
 
-  // Success
-  .then(() => {
-    res.status(200).send({message: "Board updated"})
-  })
+    // Success
+    .then(() => {
+      res.status(200).send({ message: "Board updated" });
+    })
 
-  // Fail
-  .catch(err => {
-    console.log(err)
-    res.status(500).send({message: "server error"})
-  })
-}
+    // Fail
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({ message: "server error" });
+    });
+};
 
 /**
  * Delete board controller
- * 
- * This controller deletes boards from the db. This is done by 
- *  following foreign keys until the function gets to the tasks 
- *  of the board. It then deletes all tasks, then all columns, 
+ *
+ * This controller deletes boards from the db. This is done by
+ *  following foreign keys until the function gets to the tasks
+ *  of the board. It then deletes all tasks, then all columns,
  *  and lastly the board entry itself from the db.
- * 
+ *
  * @param {JSON Object} req - http request data
  * @param {JSON Object} req.body - identifiers to locate requested board including: boardName, and workspaceID (temporary)
  * @param {JSON Object} res - result object
@@ -248,7 +258,6 @@ exports.deleteBoard = (req, res) => {
         req.userID,
       ])
       .then((workspace) => {
-        
         // Finding board id
         return t
           .one(
@@ -256,7 +265,6 @@ exports.deleteBoard = (req, res) => {
             [req.body.boardName, workspace.workspace_id]
           )
           .then((result) => {
-            
             // Set board_id
             board_id = result.board_id;
 
@@ -266,7 +274,6 @@ exports.deleteBoard = (req, res) => {
                 board_id,
               ])
               .then((result) => {
-                
                 // Fill the column id array with result from above query
                 result.map((x) => {
                   columns.push(x.column_id);
@@ -282,7 +289,6 @@ exports.deleteBoard = (req, res) => {
 
                 // Batch results from task deletion to resolve promises
                 return t.batch(deleteTasks).then((x) => {
-                  
                   // Map over column id array and delete the COLUMNS associated with ids in the array
                   const deleteColumns = columns.map((col) => {
                     return t.none("DELETE FROM columns WHERE column_id = $1", [
@@ -292,7 +298,6 @@ exports.deleteBoard = (req, res) => {
 
                   // Batch results
                   return t.batch(deleteColumns).then((y) => {
-                    
                     // Finally, delete the board
                     return t.none("DELETE FROM boards WHERE board_id = $1", [
                       board_id,
@@ -311,7 +316,7 @@ exports.deleteBoard = (req, res) => {
 
     // Fail
     .catch((err) => {
-      console.log(err)
-      res.status(500).send({message: " Server error"})
+      console.log(err);
+      res.status(500).send({ message: " Server error" });
     });
 };
