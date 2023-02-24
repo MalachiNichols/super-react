@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateBoard from "./CreateBoard";
 import React, { useState } from "react";
 
-const Workspace = ({ checkCredentials, boards, setBoards }) => {
+const Workspace = ({ checkCredentials, boards, setBoards, setCurrBoard }) => {
   const [createBoard, setCreateBoard] = useState(false);
 
   const handleNewBoard = async (title) => {
@@ -67,6 +67,7 @@ const Workspace = ({ checkCredentials, boards, setBoards }) => {
     .then(res => {
       console.log(res)
       setBoards(boards.filter((board) => board != title))
+      checkCredentials(boards[0])
     })
     .catch(err => console.log(err))
   };
@@ -86,7 +87,8 @@ const Workspace = ({ checkCredentials, boards, setBoards }) => {
             <ListItemText
               primary={board}
               onClick={(e) => {
-                checkCredentials(e);
+                let data = e.target.innerHTML
+                checkCredentials(data);
               }}
             />
             <div

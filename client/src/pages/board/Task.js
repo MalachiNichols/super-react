@@ -34,7 +34,7 @@ const Task = ({ props, deleteTask, currBoard }) => {
         boardName: currBoard,
         task: {
           placement: props.placement,
-          column: props.placement,
+          column: props.column,
         },
         changedTask: {
           name: newTitle,

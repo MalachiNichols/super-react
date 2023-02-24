@@ -1,5 +1,6 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, TextField, Input, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import SaveIcon from "@mui/icons-material/Save";
 import React, { useState, useEffect } from "react";
 import Column from "./Column";
 import { Box } from "@mui/system";
@@ -36,6 +37,8 @@ const Board = ({ id }) => {
   const [boards, setBoards] = useState([]);
   const [currBoard, setCurrBoard] = useState("");
   const [oldTasks, setOldTasks] = useState(initState);
+  const [saveButton, setSaveButton] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
 
   const checkCredentials = async (e) => {
     await fetch("http://localhost:8080/api/boards/get", {
@@ -45,7 +48,7 @@ const Board = ({ id }) => {
         authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
       body: JSON.stringify({
-        boardName: e.target.innerHTML,
+        boardName: e,
       }),
     })
       .then((res) => {
@@ -64,12 +67,13 @@ const Board = ({ id }) => {
               });
             }
             setColumns(temp);
-            temp = JSON.parse(JSON.stringify(initState))
-            data.tasks.map(task => {
-              temp[task.column - 1].push(task)
-            })
-            setOldTasks(temp)
-            setCurrBoard(e.target.innerHTML);
+            temp = JSON.parse(JSON.stringify(initState));
+            data.tasks.map((task) => {
+              temp[task.column - 1].push(task);
+            });
+            setOldTasks(temp);
+            setCurrBoard(e);
+            setNewTitle(e);
           });
         }
       })
@@ -96,6 +100,40 @@ const Board = ({ id }) => {
     findBoards();
     // checkCredentials();
   }, []);
+
+  const titleChange = (e) => {
+    console.log(e.target.value);
+    setSaveButton(true);
+    setNewTitle(e.target.value);
+  };
+
+  const updateBoard = async () => {
+    setSaveButton(false);
+    await fetch("http://localhost:8080/api/boards/update", {
+      method: "PATCH",
+      body: JSON.stringify({
+        boardName: currBoard,
+        newBoardName: newTitle,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        boards.map((board, i) => {
+          if (board == currBoard) {
+            let temp = boards.slice();
+            temp[i] = newTitle;
+            setBoards(temp);
+            console.log("hey " + boards + i + " " + temp);
+          }
+        });
+        setCurrBoard(newTitle);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleNewColumn = async (title) => {
     setColumns(columns.concat({ title: title, id: uuidv4() }));
@@ -146,8 +184,36 @@ const Board = ({ id }) => {
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-        <Typography variant="h3">{currBoard}</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 2,
+          flexDirection: "column",
+          width: '600px',
+          mx: 'auto'
+        }}
+      >
+        {currBoard && (
+          <Input
+            defaultValue={newTitle}
+            placeholder="Board Title"
+            inputProps={{ style: { textAlign: "center", fontSize: "40px" } }}
+            onChange={titleChange}
+            key={currBoard}
+          />
+        )}
+        {saveButton && (
+          <Button
+            variant="outlined"
+            endIcon={<SaveIcon />}
+            sx={{ mt: 1, width: '150px', mx: 'auto' }}
+            onClick={updateBoard}
+            
+          >
+            SAVE BOARD
+          </Button>
+        )}
       </Box>
       <Box sx={{ width: 1262, mx: "auto" }}>
         <Grid
@@ -168,6 +234,7 @@ const Board = ({ id }) => {
             checkCredentials={checkCredentials}
             boards={boards}
             setBoards={setBoards}
+            setCurrboard={setCurrBoard}
           />
 
           <Grid container wrap="nowrap" sx={{ mx: "auto", width: "100%" }}>
