@@ -113,7 +113,7 @@ exports.getBoard = (req, res) => {
  * @param {JSON Object} res - result object
  */
 exports.getMultipleBoard = (req, res) => {
-  let boardNames = []
+  let boardNames = [];
   db.tx("getBoard-transaction", (t) => {
     // t = transaction instance
 
@@ -123,18 +123,20 @@ exports.getMultipleBoard = (req, res) => {
         req.userID,
       ])
       .then((workspace) => {
-        return t.any("SELECT board_name FROM boards WHERE workspace_id = $1", [workspace.workspace_id])
-        .then((boards) => {
-          boards.map(board => {
-            boardNames.push(board.board_name)
-          })
-        })
-      })
-  })
-  .then(() => {
-      console.log('names are ' + JSON.stringify(boardNames));
-      res.status(200).send(JSON.stringify(boardNames));
-  })
+        return t
+          .any("SELECT board_name FROM boards WHERE workspace_id = $1", [
+            workspace.workspace_id,
+          ])
+          .then((boards) => {
+            boards.map((board) => {
+              boardNames.push(board.board_name);
+            });
+          });
+      });
+  }).then(() => {
+    console.log("names are " + JSON.stringify(boardNames));
+    res.status(200).send(JSON.stringify(boardNames));
+  });
 };
 
 /**
@@ -154,64 +156,43 @@ exports.saveBoard = (req, res) => {
     // t = transaction instance
 
     // Find workspaceID
-    return (
-      t
-        .one("SELECT workspace_id FROM workspaces WHERE owner_id = $1", [
-          req.userID,
-        ])
-        .then((workspace) => {
-          // Insert board into db
-          return t
-            .one(
-              "INSERT INTO boards(board_name, workspace_id) VALUES($1, $2) RETURNING board_id",
-              [req.body.boardName, workspace.workspace_id]
-            )
-            .then((board) => {
-              // Map over columns and insert them into the db with board_id from previous query
-              const col_queries = req.body.columns.map((col) => {
-                return t.one(
-                  "INSERT INTO columns(column_name, column_placement, board_id) VALUES($1, $2, $3) RETURNING column_id",
-                  [col.name, col.placement, board.board_id]
-                );
-              });
-
-              // Batch results from map queries to resolve promises
-              return t.batch(col_queries).then((col_ids) => {
-                // Map over tasks and insert them into the db with column_ids from previous queries
-                const task_queries = req.body.tasks.map((task) => {
-                  return t.none(
-                    "INSERT INTO tasks(task_name, description, task_placement, color, creator_id, column_id, column_number) VALUES($1, $2, $3, $4, $5, $6, $7)",
-                    [
-                      task.name,
-                      task.description,
-                      task.placement,
-                      task.color,
-                      req.userID,
-                      col_ids[task.column - 1].column_id,
-                      task.column,
-                    ]
-                  );
-                });
-
-                // Batch results to resolve promises
-                return t.batch(task_queries);
-              });
+    return t
+      .one("SELECT workspace_id FROM workspaces WHERE owner_id = $1", [
+        req.userID,
+      ])
+      .then((workspace) => {
+        // Insert board into db
+        return t
+          .one(
+            "INSERT INTO boards(board_name, workspace_id) VALUES($1, $2) RETURNING board_id",
+            [req.body.boardName, workspace.workspace_id]
+          )
+          .then((board) => {
+            // Map over columns and insert them into the db with board_id from previous query
+            const col_queries = req.body.columns.map((col) => {
+              return t.one(
+                "INSERT INTO columns(column_name, column_placement, board_id) VALUES($1, $2, $3) RETURNING column_id",
+                [col.name, col.placement, board.board_id]
+              );
             });
-        })
 
-        // Success
-        .then((data) => {
-          console.log("transaction succesful ", data);
-          res.status(200).send({ message: "Board saved succesfully" });
-        })
+            // Batch results from map queries to resolve promises
+            return t.batch(col_queries);
+          });
+      });
+  })
 
-        // Fail
-        .catch((err) => {
-          console.log(err);
-          res.status(500).send({ message: "Server error" });
-        })
-    );
-  });
+    // Success
+    .then((data) => {
+      console.log("transaction succesful ", data);
+      res.status(200).send({ message: "Board saved succesfully" });
+    })
+
+    // Fail
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({ message: "Server error" });
+    });
 };
 
 /**

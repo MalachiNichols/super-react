@@ -7,33 +7,35 @@ import CreateColumn from "./CreateColumn";
 import { v4 as uuidv4 } from "uuid";
 import Workspace from "./Workspace";
 
+const initState = [
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+];
+
 const Board = ({ id }) => {
   const [createColumn, setCreateColumn] = useState(false);
   const [columns, setColumns] = useState([]);
-  const [boards, setBoards] = useState([])
-  const [currBoard, setCurrentBoard] = useState("");
-  const [oldTasks, setOldTasks] = useState([
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-  ]);
+  const [boards, setBoards] = useState([]);
+  const [currBoard, setCurrBoard] = useState("");
+  const [oldTasks, setOldTasks] = useState(initState);
 
   const checkCredentials = async (e) => {
     await fetch("http://localhost:8080/api/boards/get", {
@@ -61,14 +63,13 @@ const Board = ({ id }) => {
                 id: uuidv4(),
               });
             }
-            data.tasks.map((task) => {
-              setOldTasks((prevState) => {
-                const copy = prevState.slice();
-                copy[task.column - 1].push(task);
-                return copy;
-              });
-            });
             setColumns(temp);
+            temp = JSON.parse(JSON.stringify(initState))
+            data.tasks.map(task => {
+              temp[task.column - 1].push(task)
+            })
+            setOldTasks(temp)
+            setCurrBoard(e.target.innerHTML);
           });
         }
       })
@@ -82,17 +83,17 @@ const Board = ({ id }) => {
         authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
     })
-    .then(res => {
-      res.json().then(data => {
-        console.log(data)
-        setBoards(data)
+      .then((res) => {
+        res.json().then((data) => {
+          console.log(data);
+          setBoards(data);
+        });
       })
-    })
-    .catch(err => console.log(err))
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    findBoards()
+    findBoards();
     // checkCredentials();
   }, []);
 
@@ -146,7 +147,7 @@ const Board = ({ id }) => {
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-        <Typography variant="h3">Current Board</Typography>
+        <Typography variant="h3">{currBoard}</Typography>
       </Box>
       <Box sx={{ width: 1262, mx: "auto" }}>
         <Grid
@@ -163,7 +164,11 @@ const Board = ({ id }) => {
             height: 500,
           }}
         >
-          <Workspace checkCredentials={checkCredentials} boards={boards}/>
+          <Workspace
+            checkCredentials={checkCredentials}
+            boards={boards}
+            setBoards={setBoards}
+          />
 
           <Grid container wrap="nowrap" sx={{ mx: "auto", width: "100%" }}>
             {columns[0] &&
