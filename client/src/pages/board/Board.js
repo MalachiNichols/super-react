@@ -102,7 +102,7 @@ const Board = ({ id }) => {
     await fetch("http://localhost:8080/api/columns/add", {
       method: "POST",
       body: JSON.stringify({
-        boardName: "Your 1st Board",
+        boardName: currBoard,
         column: {
           name: title,
         },
@@ -130,7 +130,7 @@ const Board = ({ id }) => {
     await fetch("http://localhost:8080/api/columns/delete", {
       method: "DELETE",
       body: JSON.stringify({
-        boardName: "Your 1st Board",
+        boardName: currBoard,
         column: {
           placement: deleteCol.placement,
         },
@@ -181,6 +181,7 @@ const Board = ({ id }) => {
                     deleteColumn={deleteColumn}
                     oldTasks={oldTasks[i]}
                     placement={i + 1}
+                    currBoard={currBoard}
                   />
                 );
               })}

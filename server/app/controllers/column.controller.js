@@ -57,7 +57,7 @@ exports.addColumn = (req, res) => {
                     VALUES($1,
                     (
                     SELECT 
-                        max(column_placement) + 1
+                        coalesce(max(column_placement) + 1, 0)
                     FROM 
                         columns
                     WHERE 
@@ -75,7 +75,7 @@ exports.addColumn = (req, res) => {
         })
         // FAIL
         .catch(error => {
-          return res.status(500).json({message: error.message ? error.message : 'Something went wrong'})
+          return res.status(500).json({message: error.message ? error : 'Something went wrong'})
       })
     };
     
