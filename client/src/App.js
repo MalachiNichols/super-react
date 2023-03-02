@@ -19,8 +19,8 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/about' element={<About />} />
-            <Route path='/contact' element={<Contact />} />
-            <Route path='/board' element={<Board id={ 1 }/>} /> {/* need to change id dynamically eventually */}
+            {/* <Route path='/contact' element={<Contact />} /> */}
+            <Route path='/board' element={<Board id={ 1 }/>} />
             <Route path='/register' element={<Register />} />
             <Route path='/signin' element={<SignIn />} />
             <Route path='/*' element={<Error/>} />

@@ -12,7 +12,7 @@ const Mission = () => {
           sx={{
             maxWidth: "700px",
             mx: "auto",
-            border: "2px solid purple",
+            border: "2px solid white",
             borderRadius: 2,
             py: 2,
           }}
