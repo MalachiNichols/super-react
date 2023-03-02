@@ -56,7 +56,7 @@ const Task = ({ props, deleteTask, currBoard }) => {
   };
 
   return (
-    <Card sx={{ mt: 1 }}>
+    <Card sx={{ mt: 1, backgroundColor: '#F3EFE0' }}>
       <CardContent>
         <IconButton
           sx={{ mt: -2, float: "right" }}

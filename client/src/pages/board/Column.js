@@ -119,6 +119,7 @@ const Column = ({ title, id, deleteColumn, placement, oldTasks, currBoard }) => 
         border: "1px solid black",
         overflowY: "auto",
         flex: 1,
+        backgroundColor: '#F3EFE0'
       }}
     >
       <IconButton
