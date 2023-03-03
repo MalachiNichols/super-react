@@ -221,7 +221,7 @@ const Board = ({ id }) => {
           justifyContent="center"
           wrap="nowrap"
           sx={{
-            border: "1px solid black",
+            border: "1px solid #222222",
             width: 1262,
             mx: "auto",
             mt: 5,

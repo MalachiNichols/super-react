@@ -76,7 +76,7 @@ const Workspace = ({ checkCredentials, boards, setBoards, setCurrBoard }) => {
     <Box
       width={250}
       height={495}
-      border="2px solid black"
+      border="2px solid #222222"
       sx={{ position: "absolute", left: "2%", backgroundColor: '#F3EFE0' }}
     >
       {/* <Typography>workspaces</Typography>
