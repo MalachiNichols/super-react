@@ -1,4 +1,4 @@
-import { Button, Grid, TextField, Input, Typography } from "@mui/material";
+import { Button, Grid, TextField, Input, Typography, Container } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import React, { useState, useEffect } from "react";
@@ -198,7 +198,7 @@ const Board = ({ id }) => {
           <Input
             defaultValue={newTitle}
             placeholder="Board Title"
-            inputProps={{ style: { textAlign: "center", fontSize: "40px" } }}
+            inputProps={{ style: { textAlign: "center", fontSize: "40px", color: '#F3EFE0' } }}
             onChange={titleChange}
             key={currBoard}
           />
@@ -221,7 +221,7 @@ const Board = ({ id }) => {
           justifyContent="center"
           wrap="nowrap"
           sx={{
-            border: "1px solid black",
+            border: "1px solid #222222",
             width: 1262,
             mx: "auto",
             mt: 5,

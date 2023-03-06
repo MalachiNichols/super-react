@@ -1,17 +1,36 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import { ThemeProvider, createTheme } from "@mui/material";
 // import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const theme = createTheme({
+  palette: {
+     primary: {
+        light: '#fff',
+        main: '#22A39F',
+        dark: '#22A39F'
+     },
+     secondary: {
+       main: '#f44336',
+     },
+  },
+});
+
+
 root.render(
   // <React.StrictMode>
+  <ThemeProvider theme={theme}>
     <App />
+  </ThemeProvider>
   // </React.StrictMode>
 );
 

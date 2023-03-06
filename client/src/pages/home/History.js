@@ -1,25 +1,41 @@
 import React from "react";
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container";
+import { Grid } from "@mui/material";
 import Box  from "@mui/system/Box";
 
 const History = () => {
   return (
-    <Container class="section" style={{ background: "aliceblue" }}>
-      <Typography variant="h6" align="center">
+    <Container sx={{ background: '#222222' }}
+    maxWidth={false}>
+      <Grid
+        container
+        align="center"
+        columnSpacing={20}
+        sx={{
+          minWidth: "100%",
+          minHeight: 600,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Grid item>
+      <Typography variant="h6" align="center" color="#F3EFE0">
         History of the Kanban Board
       </Typography>
       <Box
         sx={{
           mb: 2,
           mx: "auto",
-          width: 600,
-          backgroundColor: "purple",
+          width: 400,
           p: 5,
           borderRadius: 10,
+          border: '2px solid #22A39F'
         }}
       >
-        <Typography variant="body1" align="center">
+        <Typography variant="body1" align="center" color="#F3EFE0">
           In Japanese, “kanban” means “visual sign” or “visual card,” and the
           concept was originated by Toyota in the 1940s. The purpose of the
           design was to help improve manufacturing efficiency and create a
@@ -33,6 +49,18 @@ const History = () => {
           the project timeline on track and follows the same core methodology.
         </Typography>
       </Box>
+      </Grid>
+      <Grid item>
+
+            <img
+              id="kanbanBoard"
+              src="assets/toyota-kanban.jpg"
+              alt="computer"
+              width="600"
+              height="400"
+            />
+          </Grid>
+      </Grid>
     </Container>
   );
 };

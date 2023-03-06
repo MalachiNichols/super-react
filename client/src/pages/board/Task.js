@@ -56,10 +56,10 @@ const Task = ({ props, deleteTask, currBoard }) => {
   };
 
   return (
-    <Card sx={{ mt: 1 }}>
+    <Card sx={{ mt: 1, backgroundColor: '#222222' }}>
       <CardContent>
         <IconButton
-          sx={{ mt: -2, float: "right" }}
+          sx={{ mt: -2, float: "right", color: "#F3EFE0" }}
           onClick={() => {
             deleteTask(props.id);
           }}
@@ -70,6 +70,7 @@ const Task = ({ props, deleteTask, currBoard }) => {
           defaultValue={props.title}
           inputProps={{ style: { textAlign: "center" }, spellCheck: "false" }}
           onChange={titleChange}
+          sx={{color: "#F3EFE0"}}
         />
         <TextField
           defaultValue={props.description}
@@ -77,6 +78,7 @@ const Task = ({ props, deleteTask, currBoard }) => {
           inputProps={{ spellCheck: "false" }}
           maxRows={4}
           onChange={descChange}
+          sx={{color: "#222222", backgroundColor: '#F3EFE0'}}
         />
         {saveButton && (
           <Button

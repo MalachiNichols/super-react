@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <Container
       maxWidth={false}
-      sx={{ backgroundColor: theme.palette.secondary.light, position: 'absolute', bottom: 0, height: '7rem' }}
+      sx={{ backgroundColor: '#22A39F', position: 'absolute', bottom: 0, height: '7rem' }}
     >
       <Box sx={{ mx: "auto", width: 500, my: 2 }}>
         <Grid container columns={12}>
@@ -54,7 +54,7 @@ const Footer = () => {
           src="assets/supernova.jpg"
           width="40px"
         ></Box>
-        <Link variant="h6" underline="hover" href="" sx={{color: 'white'}}>
+        <Link variant="h6" underline="hover" href="" sx={{color: '#F3EFE0'}}>
           Supernova © 2023
         </Link>
       </Box>
