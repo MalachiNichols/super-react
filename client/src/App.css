@@ -36,6 +36,25 @@ body,
     border: 3px solid #ffffff;
   }
 
+  .columnCard::-webkit-scrollbar {
+    display: none;
+  }
+
+  .columnCard {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .columnCard:hover::-webkit-scrollbar {
+    display: initial;
+  }
+
+  .columnCard:hover {
+    -ms-overflow-style: initial;
+    scrollbar-width: thin;
+    scrollbar-width: 10px;
+  }
+
 /* #footer {
   position: absolute;
   bottom: 0;

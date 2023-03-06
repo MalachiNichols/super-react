@@ -1,3 +1,4 @@
+import '../../App.css'
 import { Card, CardContent, Button, Input, IconButton } from "@mui/material";
 import { Scrollbars } from "react-scrollbars-custom";
 import React, { useState } from "react";
@@ -132,6 +133,7 @@ const Column = ({
           flex: 1,
           backgroundColor: "#F3EFE0",
         }}
+        className='columnCard'
       >
         <IconButton
           sx={{ mt: -2, float: "right" }}

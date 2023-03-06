@@ -6,10 +6,10 @@ import TeamMember from './TeamMember'
 const Team = () => {
   return (
     <Container
-        sx={{ background: "linear-gradient(70deg,#007880, #b5bdbe)" }}
+        sx={{ background: '#F3EFE0' }}
         maxWidth={false}
       >
-        <Typography variant="h3" color="white" align="center" sx={{ my: 2 }}>
+        <Typography variant="h3" color="#222222" align="center" sx={{ my: 2 }}>
           Meet the team
         </Typography>
 

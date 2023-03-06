@@ -61,7 +61,7 @@ const Define = () => {
             id="kanbanBoard"
             src="assets/kanban-ex.png"
             alt="computer"
-            width="800"
+            width="900"
             height="400"
           />
         </Grid>

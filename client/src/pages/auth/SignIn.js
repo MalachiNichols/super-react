@@ -37,11 +37,10 @@ const SignIn = () => {
             console.log(data);
             localStorage.setItem("user", data.username);
             localStorage.setItem("accessToken", data.accessToken);
-            window.location.href = '/board'
+            window.location.href = "/board";
           });
         } else {
-          res.json().then(data => 
-          alert(data.message))
+          res.json().then((data) => alert(data.message));
         }
       })
       .catch((err) => console.log(err));
@@ -51,19 +50,28 @@ const SignIn = () => {
     <Container
       maxWidth={false}
       sx={{
-        background: "linear-gradient(70deg,#007880, #b5bdbe)",
+        background: "#222222",
         height: "81vh",
         pt: 10,
       }}
     >
-      <Card align="center" sx={{ maxWidth: 400, pt: 2, mx: "auto" }}>
+      <Card
+        align="center"
+        sx={{
+          border: "4px solid #22A39F",
+          maxWidth: 400,
+          pt: 2,
+          mx: "auto",
+          backgroundColor: "#F3EFE0",
+        }}
+      >
         <CardMedia
-          sx={{ height: 140, width: 140 }}
+          sx={{ height: 140, width: 140, borderRadius: 18 }}
           image="assets/supernova.jpg"
           title="Supernova logo"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div" color='#222222'>
             Sign In Here!
           </Typography>
           <TextField
@@ -88,21 +96,21 @@ const SignIn = () => {
             sx={{ mt: 1 }}
             id="outlined-password-input"
             label="Password"
-            defaultValue=''
+            defaultValue=""
             type="password"
             onChange={(e) =>
               setCredentials({ ...credentials, password: e.target.value })
             }
           />
         </CardContent>
-        <CardActions>
+        <CardActions sx={{ mb: 2 }}>
           <Button
             size="medium"
             sx={{
-              color: "white",
+              color: "#222222",
               maxWidth: 100,
               mx: "auto",
-              background: "linear-gradient(70deg,#007880, #b5bdbe)",
+              background: "#22A39F",
             }}
             onClick={submitCredentials}
           >

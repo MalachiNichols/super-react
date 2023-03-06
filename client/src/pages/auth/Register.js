@@ -15,7 +15,7 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
-    repeat: ""
+    repeat: "",
   });
 
   const submitCredentials = async () => {
@@ -38,7 +38,7 @@ const Register = () => {
             console.log(data);
             localStorage.setItem("user", data.username);
             localStorage.setItem("accessToken", data.accessToken);
-            alert('Signed up succesfully!')
+            alert("Signed up succesfully!");
             window.location.href = "/signin";
           });
         } else {
@@ -52,19 +52,28 @@ const Register = () => {
     <Container
       maxWidth={false}
       sx={{
-        background: "linear-gradient(70deg,#007880, #b5bdbe)",
+        background: "#222222",
         height: "81vh",
         pt: 10,
       }}
     >
-      <Card align="center" sx={{ maxWidth: 400, pt: 2, mx: "auto" }}>
+      <Card
+        align="center"
+        sx={{
+          border: "4px solid #22A39F",
+          maxWidth: 400,
+          pt: 2,
+          mx: "auto",
+          backgroundColor: "#F3EFE0",
+        }}
+      >
         <CardMedia
-          sx={{ height: 140, width: 140 }}
+          sx={{ height: 140, width: 140, borderRadius: 18 }}
           image="assets/supernova.jpg"
           title="Supernova logo"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div" color="#222222">
             Register Here!
           </Typography>
           <Typography variant="body2" color="text.secondary">
@@ -76,7 +85,7 @@ const Register = () => {
             label="Username"
             type="text"
             onChange={(e) => {
-              setCredentials({ ...credentials, username: e.target.value})
+              setCredentials({ ...credentials, username: e.target.value });
             }}
           />
           <TextField
@@ -85,7 +94,7 @@ const Register = () => {
             label="Email"
             type="text"
             onChange={(e) => {
-              setCredentials({ ...credentials, email: e.target.value})
+              setCredentials({ ...credentials, email: e.target.value });
             }}
           />
           <TextField
@@ -94,7 +103,7 @@ const Register = () => {
             label="Password"
             type="password"
             onChange={(e) => {
-              setCredentials({ ...credentials, password: e.target.value})
+              setCredentials({ ...credentials, password: e.target.value });
             }}
           />
           <TextField
@@ -103,7 +112,7 @@ const Register = () => {
             label="Repeat Password"
             type="password"
             onChange={(e) => {
-              setCredentials({ ...credentials, repeat: e.target.value})
+              setCredentials({ ...credentials, repeat: e.target.value });
             }}
           />
         </CardContent>
@@ -111,10 +120,10 @@ const Register = () => {
           <Button
             size="medium"
             sx={{
-              color: "white",
+              color: "#222222",
               maxWidth: 100,
               mx: "auto",
-              background: "linear-gradient(70deg,#007880, #b5bdbe)",
+              background: "#22A39F",
             }}
             onClick={submitCredentials}
           >
