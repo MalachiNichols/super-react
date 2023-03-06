@@ -7,7 +7,7 @@ Currently, there is no hosted database. I run my own local postgres db for devel
 # Stack 
 The frontend is React with MUI for styling and customized components. The backend server is Express hooked up to a postgres db I run locally. 
 
-#todo
+# todo
 1. some form of user state to display username in navbar on signin. 
     most likely stored in app.js, and pass state variable into navbar,
     and give SignIn component access to setter for said state variable.
