@@ -1,4 +1,11 @@
-import { Button, Grid, TextField, Input, Typography, Container } from "@mui/material";
+import {
+  Button,
+  Grid,
+  TextField,
+  Input,
+  Typography,
+  Container,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import React, { useState, useEffect } from "react";
@@ -88,8 +95,11 @@ const Board = ({ id }) => {
       },
     })
       .then((res) => {
+        if (res.status == 401) {
+          alert("Please sign in or register!");
+          window.location.href = "/";
+        }
         res.json().then((data) => {
-          console.log(data);
           setBoards(data);
         });
       })
@@ -98,7 +108,6 @@ const Board = ({ id }) => {
 
   useEffect(() => {
     findBoards();
-    // checkCredentials();
   }, []);
 
   const titleChange = (e) => {
@@ -190,15 +199,21 @@ const Board = ({ id }) => {
           justifyContent: "center",
           mt: 2,
           flexDirection: "column",
-          width: '600px',
-          mx: 'auto'
+          width: "600px",
+          mx: "auto",
         }}
       >
         {currBoard && (
           <Input
             defaultValue={newTitle}
             placeholder="Board Title"
-            inputProps={{ style: { textAlign: "center", fontSize: "40px", color: '#F3EFE0' } }}
+            inputProps={{
+              style: {
+                textAlign: "center",
+                fontSize: "40px",
+                color: "#F3EFE0",
+              },
+            }}
             onChange={titleChange}
             key={currBoard}
           />
@@ -207,9 +222,8 @@ const Board = ({ id }) => {
           <Button
             variant="outlined"
             endIcon={<SaveIcon />}
-            sx={{ mt: 1, width: '150px', mx: 'auto' }}
+            sx={{ mt: 1, width: "150px", mx: "auto" }}
             onClick={updateBoard}
-            
           >
             SAVE BOARD
           </Button>
@@ -221,8 +235,8 @@ const Board = ({ id }) => {
           justifyContent="center"
           wrap="nowrap"
           sx={{
-            border: "1px solid #222222",
-            width: 1262,
+            border: "2px solid #22A39F",
+            width: 1264,
             mx: "auto",
             mt: 5,
             overflowX: "auto",
@@ -254,7 +268,7 @@ const Board = ({ id }) => {
               })}
           </Grid>
         </Grid>
-        {!createColumn && (
+        {currBoard && !createColumn && (
           <Button
             startIcon={<AddIcon />}
             sx={{ float: "right", mt: 1 }}
