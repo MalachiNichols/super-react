@@ -5,9 +5,11 @@ import {
   ListItemText,
   Button,
   IconButton,
+  Container,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { v4 as uuidv4 } from "uuid";
 import CreateBoard from "./CreateBoard";
 import React, { useState } from "react";
 
@@ -54,55 +56,71 @@ const Workspace = ({ checkCredentials, boards, setBoards, setCurrBoard }) => {
 
   const deleteBoard = async (title) => {
     console.log(title);
-    await fetch('http://localhost:8080/api/boards/delete', {
-      method: 'DELETE',
+    await fetch("http://localhost:8080/api/boards/delete", {
+      method: "DELETE",
       body: JSON.stringify({
-        boardName: title
+        boardName: title,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
         authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
     })
-    .then(res => {
-      console.log(res)
-      setBoards(boards.filter((board) => board != title))
-      checkCredentials(boards[0])
-    })
-    .catch(err => console.log(err))
+      .then((res) => {
+        console.log(res);
+        setBoards(boards.filter((board) => board != title));
+        boards[0] == title ? checkCredentials(boards[1]) : checkCredentials(boards[0])
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
-    <Box
+    <Container
       width={250}
       height={495}
-      border="2px solid #222222"
-      sx={{ position: "absolute", left: "2%", backgroundColor: '#F3EFE0' }}
+      sx={{
+        position: "absolute",
+        left: "2%",
+        backgroundColor: "#F3EFE0",
+        border: "2px solid #22A39F",
+        width: 250,
+        height: 495,
+        overflow: "scroll",
+      }}
     >
-      {/* <Typography>workspaces</Typography>
-        Workspace */}
       <List>
         {boards.map((board) => (
-          <ListItem button>
+          <Container sx={{ width: '200px'}} key={uuidv4()}>
+          <ListItem button 
+          sx={{ml: -4}}
+          onClick={(e) => {
+            let data = e.currentTarget.firstChild.innerText;
+            console.dir(e.currentTarget) 
+            console.log('data is ' + data)
+            checkCredentials(data);
+          }}>
             <ListItemText
               primary={board}
-              onClick={(e) => {
-                let data = e.target.innerHTML
-                checkCredentials(data);
-              }}
+              // onClick={(e) => {
+              //   let data = e.target.innerHTML;
+              //   console.log('e is ' + e + 'target is ' + e.target + 'data is ' + data)
+              //   checkCredentials(data);
+              // }}
             />
-            <div
+            
+          </ListItem>
+          <div
               onClick={(e) => {
                 deleteBoard(
-                  e.currentTarget.previousElementSibling.firstChild.innerHTML
+                  e.currentTarget.previousElementSibling.firstChild.innerText
                 );
               }}
             >
-              <IconButton sx={{ mt: -2, float: "right" }}>
+              <IconButton sx={{ mt: -5.5, float: "right" }}>
                 <DeleteIcon />
               </IconButton>
             </div>
-          </ListItem>
+          </Container>
         ))}
       </List>
       {createBoard && (
@@ -120,7 +138,7 @@ const Workspace = ({ checkCredentials, boards, setBoards, setCurrBoard }) => {
       >
         Board
       </Button>
-    </Box>
+    </Container>
   );
 };
 
