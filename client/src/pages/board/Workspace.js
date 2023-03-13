@@ -17,6 +17,15 @@ const Workspace = ({ checkCredentials, boards, setBoards, setCurrBoard }) => {
   const [createBoard, setCreateBoard] = useState(false);
 
   const handleNewBoard = async (title) => {
+
+    if(boards.includes(title)) {
+      let i = 1
+      while(boards.includes(title + i)) {
+        i++
+      }
+      title = title + i
+    }
+
     setBoards([...boards, title]);
     await fetch("http://localhost:8080/api/boards/save", {
       method: "POST",
