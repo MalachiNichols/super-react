@@ -117,12 +117,25 @@ const Board = ({ id }) => {
   };
 
   const updateBoard = async () => {
+
+    let title = JSON.parse(JSON.stringify(newTitle))
+    console.log(title)
+
+    if(boards.includes(title)) {
+      let i = 1
+      while(boards.includes(title + i)) {
+        i++
+      }
+      title = title + i
+      setNewTitle(title)
+    }
+
     setSaveButton(false);
     await fetch("http://localhost:8080/api/boards/update", {
       method: "PATCH",
       body: JSON.stringify({
         boardName: currBoard,
-        newBoardName: newTitle,
+        newBoardName: title,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -134,12 +147,12 @@ const Board = ({ id }) => {
         boards.map((board, i) => {
           if (board == currBoard) {
             let temp = boards.slice();
-            temp[i] = newTitle;
+            temp[i] = title;
             setBoards(temp);
             console.log("hey " + boards + i + " " + temp);
           }
         });
-        setCurrBoard(newTitle);
+        setCurrBoard(title);
       })
       .catch((err) => console.log(err));
   };

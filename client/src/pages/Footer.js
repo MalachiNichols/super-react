@@ -30,11 +30,11 @@ const Footer = () => {
               Terms
             </Link>
           </Grid>
-          <Grid item xs align="center">
+          {/* <Grid item xs align="center">
             <Link variant="body1" color="black" underline="hover" href="">
               Contact
             </Link>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
 
