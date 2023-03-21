@@ -1,6 +1,6 @@
 CREATE TABLE users 
 		(
-			id SERIAL PRIKMARY KEY,
+			id SERIAL PRIMARY KEY,
 			name VARCHAR ( 255 ) NOT NULL,
 			email VARCHAR ( 255 ) UNIQUE NOT NULL,
 			password VARCHAR ( 255 ) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE boards
 			board_name VARCHAR ( 255 ) NOT NULL,
 			workspace_id INT NOT NULL,
 			FOREIGN KEY (workspace_id) 
-				REFERENCES workspces (workspace_id)
+				REFERENCES workspaces (workspace_id)
 		);
 CREATE TABLE columns
 		(
