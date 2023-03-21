@@ -35,7 +35,7 @@ const Column = ({
 
   const saveTitle = async () => {
     setSaveButton(false);
-    await fetch("http://localhost:8080/api/columns/update", {
+    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/columns/update`, {
       method: "PATCH",
       body: JSON.stringify({
         boardName: currBoard,
@@ -69,7 +69,7 @@ const Column = ({
         id: uuidv4(),
       })
     );
-    await fetch("http://localhost:8080/api/tasks/create", {
+    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/tasks/create`, {
       method: "POST",
       body: JSON.stringify({
         boardName: currBoard,
@@ -99,7 +99,7 @@ const Column = ({
         deleteTask = x;
       }
     });
-    await fetch("http://localhost:8080/api/tasks/delete", {
+    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/tasks/delete`, {
       method: "DELETE",
       body: JSON.stringify({
         boardName: currBoard,

@@ -48,7 +48,7 @@ const Board = ({ id }) => {
   const [newTitle, setNewTitle] = useState("");
 
   const checkCredentials = async (e) => {
-    await fetch("http://localhost:8080/api/boards/get", {
+    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/boards/get`, {
       method: "POST",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -88,7 +88,7 @@ const Board = ({ id }) => {
   };
 
   const findBoards = async () => {
-    await fetch("http://localhost:8080/api/boards/getmultiple", {
+    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/boards/getmultiple`, {
       method: "GET",
       headers: {
         authorization: "Bearer " + localStorage.getItem("accessToken"),
@@ -131,7 +131,7 @@ const Board = ({ id }) => {
     }
 
     setSaveButton(false);
-    await fetch("http://localhost:8080/api/boards/update", {
+    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/boards/update`, {
       method: "PATCH",
       body: JSON.stringify({
         boardName: currBoard,
@@ -159,7 +159,7 @@ const Board = ({ id }) => {
 
   const handleNewColumn = async (title) => {
     setColumns(columns.concat({ title: title, id: uuidv4() }));
-    await fetch("http://localhost:8080/api/columns/add", {
+    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/columns/add`, {
       method: "POST",
       body: JSON.stringify({
         boardName: currBoard,
@@ -187,7 +187,7 @@ const Board = ({ id }) => {
     });
     console.log(deleteCol);
     setColumns(columns.filter((column) => column.id !== id));
-    await fetch("http://localhost:8080/api/columns/delete", {
+    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/columns/delete`, {
       method: "DELETE",
       body: JSON.stringify({
         boardName: currBoard,

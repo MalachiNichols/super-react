@@ -28,7 +28,7 @@ const Task = ({ props, deleteTask, currBoard }) => {
 
   const saveTask = async () => {
     setSaveButton(false);
-    await fetch("http://localhost:8080/api/tasks/update", {
+    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/tasks/update`, {
       method: "PATCH",
       body: JSON.stringify({
         boardName: currBoard,
