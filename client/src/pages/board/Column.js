@@ -1,6 +1,5 @@
 import '../../App.css'
 import { Card, CardContent, Button, Input, IconButton } from "@mui/material";
-import { Scrollbars } from "react-scrollbars-custom";
 import React, { useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
