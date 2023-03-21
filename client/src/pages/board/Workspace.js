@@ -85,21 +85,21 @@ const Workspace = ({ checkCredentials, boards, setBoards, setCurrBoard }) => {
 
   return (
     <Container
-      width={250}
-      height={495}
+      width='13.14vw'
+      height='53.8vh'
       sx={{
         position: "absolute",
         left: "2%",
         backgroundColor: "#F3EFE0",
         border: "2px solid #22A39F",
-        width: 250,
-        height: 495,
+        width: '13.14vw',
+        height: '53.8vh',
         overflow: "scroll",
       }}
     >
       <List>
         {boards.map((board) => (
-          <Container sx={{ width: '200px'}} key={uuidv4()}>
+          <Container sx={{ width: '10.42vw'}} key={uuidv4()}>
           <ListItem button 
           sx={{ml: -4}}
           onClick={(e) => {
@@ -139,7 +139,7 @@ const Workspace = ({ checkCredentials, boards, setBoards, setCurrBoard }) => {
         />
       )}
       <Button
-        sx={{ width: 100, ml: "75px" }}
+        sx={{ width: '3.85vw', ml: "3.84vw" }}
         startIcon={<AddIcon />}
         onClick={() => {
           setCreateBoard(true);

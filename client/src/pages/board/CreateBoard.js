@@ -23,7 +23,7 @@ const CreateBoard = ({ handleNewBoard, setCreateBoard}) => {
           setCreateBoard(false);
         }}
       >
-        SAVE Board
+        SAVE BOARD
       </Button>
     </>
   );
