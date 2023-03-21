@@ -12,21 +12,21 @@ const CreateTask = ({ newTask, setNewTask, saveTask }) => {
   };
 
   return (
-    <Card sx={{ mt: 1, maxWidth: 200 }}>
+    <Card sx={{ mt: 1, maxWidth: 200, backgroundColor: '#222222' }}>
       <CardContent>
-        <TextField label="Title" onChange={setTaskTitle}></TextField>
+        <TextField label="Title" sx={{backgroundColor: "#F3EFE0"}} onChange={setTaskTitle}></TextField>
         <TextField
           label="Description"
           multiline
           rows={2}
           maxRows={2}
-          sx={{ mt: 1 }}
+          sx={{backgroundColor: "#F3EFE0", mt: 1}}
           onChange={setTaskDesc}
         ></TextField>
         <Button
           variant="outlined"
           endIcon={<SaveIcon />}
-          sx={{ mt: 1 }}
+          sx={{ mt: 1, maxWidth: '90%' }}
           onClick={() => {
             saveTask();
           }}

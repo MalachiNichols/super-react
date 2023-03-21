@@ -212,7 +212,7 @@ const Board = ({ id }) => {
           justifyContent: "center",
           mt: 2,
           flexDirection: "column",
-          width: "600px",
+          width: "31.25vw",
           mx: "auto",
         }}
       >
@@ -223,7 +223,7 @@ const Board = ({ id }) => {
             inputProps={{
               style: {
                 textAlign: "center",
-                fontSize: "40px",
+                fontSize: "2vw",
                 color: "#F3EFE0",
               },
             }}
@@ -242,19 +242,19 @@ const Board = ({ id }) => {
           </Button>
         )}
       </Box>
-      <Box sx={{ width: 1262, mx: "auto" }}>
+      <Box sx={{ width: '65.9vw', mx: "auto", mb: 2 }}>
         <Grid
           container
           justifyContent="center"
           wrap="nowrap"
           sx={{
             border: "2px solid #22A39F",
-            width: 1264,
+            width: '65.9vw',
             mx: "auto",
             mt: 5,
             overflowX: "auto",
             overflowY: "hidden",
-            height: 500,
+            height: '53.8vh',
           }}
         >
           <Workspace
