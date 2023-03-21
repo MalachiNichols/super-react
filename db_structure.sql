@@ -37,7 +37,7 @@ CREATE TABLE tasks
 			task_placement INT NOT NULL,
 			color VARCHAR ( 255 ),
 			column_number INT NOT NULL,
-			coumn_id INT NOT NULL,
+			column_id INT NOT NULL,
 			creator_id INT,
 			FOREIGN KEY (column_id)
 				REFERENCES columns (column_id),
