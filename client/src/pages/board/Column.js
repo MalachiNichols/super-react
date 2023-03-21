@@ -124,7 +124,7 @@ const Column = ({
       <Card
         align="center"
         sx={{
-          minWidth: '13.vw',
+          minWidth: '12.9vw',
           // maxWidth: 250,
           // height: 480,
           pt: 2,
