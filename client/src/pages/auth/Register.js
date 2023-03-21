@@ -20,7 +20,7 @@ const Register = () => {
 
   const submitCredentials = async () => {
     console.log(credentials);
-    await fetch("http://localhost:8080/api/auth/signup", {
+    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/auth/signup`, {
       method: "POST",
       body: JSON.stringify({
         username: credentials.username,
