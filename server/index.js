@@ -4,7 +4,18 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors")
+const https = require('https')
+const http = require('http')
+const fs = require('fs')
 const { SERVER_PORT } = require('./app/config/env.config');
+
+/**
+ * Init SSL creds
+ */
+const options = {
+  key: fs.readFileSync('/certs/selfsigned.key'),
+  cert: fs.readFileSync('/certs/selfsigned.crt')
+}
 
 /*
  * Init server and logger
@@ -36,9 +47,12 @@ require('./app/routes/board.routes.js')(app)
 require('./app/routes/column.routes.js')(app)
 require('./app/routes/task.routes.js')(app)
 
+
 /*
  * Set server port
  */
-app.listen(SERVER_PORT, () => {
-  console.log(`server running on ${SERVER_PORT}`);
-});
+// server.listen(SERVER_PORT, () => {
+//   console.log(`server running on ${SERVER_PORT}`);
+// });
+http.createServer(app).listen(8080)
+https.createServer(options, app).listen(8081)
