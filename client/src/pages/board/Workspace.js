@@ -26,7 +26,7 @@ const Workspace = ({ checkCredentials, boards, setBoards, setCurrBoard }) => {
     }
 
     setBoards([...boards, title]);
-    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/boards/save`, {
+    await fetch(`https://${process.env.REACT_APP_LOCALIP}:8081/api/boards/save`, {
       method: "POST",
       body: JSON.stringify({
         boardName: title,
@@ -64,7 +64,7 @@ const Workspace = ({ checkCredentials, boards, setBoards, setCurrBoard }) => {
 
   const deleteBoard = async (title) => {
     console.log(title);
-    await fetch(`http://${process.env.REACT_APP_LOCALIP}:8080/api/boards/delete`, {
+    await fetch(`https://${process.env.REACT_APP_LOCALIP}:8081/api/boards/delete`, {
       method: "DELETE",
       body: JSON.stringify({
         boardName: title,
