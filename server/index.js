@@ -3,19 +3,19 @@
  */
 const express = require("express");
 const logger = require("morgan");
-const cors = require("cors")
-const https = require('https')
-const http = require('http')
-const fs = require('fs')
-const { SERVER_PORT } = require('./app/config/env.config');
+const cors = require("cors");
+const https = require("https");
+const http = require("http");
+const fs = require("fs");
+const { SERVER_PORT } = require("./app/config/env.config");
 
 /**
  * Init SSL creds
  */
 const options = {
-  key: fs.readFileSync('/certs/selfsigned.key'),
-  cert: fs.readFileSync('/certs/selfsigned.crt')
-}
+  key: fs.readFileSync("./certs/selfsigned.key"),
+  cert: fs.readFileSync("./certs/selfsigned.crt"),
+};
 
 /*
  * Init server and logger
@@ -28,9 +28,11 @@ app.use(logger("dev"));
  */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({
-  origin: '*'
-}))
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 /*
  * Default route
@@ -42,11 +44,10 @@ app.get("/", (req, res) => {
 /*
  * Import routes
  */
-require('./app/routes/auth.routes.js')(app)
-require('./app/routes/board.routes.js')(app)
-require('./app/routes/column.routes.js')(app)
-require('./app/routes/task.routes.js')(app)
-
+require("./app/routes/auth.routes.js")(app);
+require("./app/routes/board.routes.js")(app);
+require("./app/routes/column.routes.js")(app);
+require("./app/routes/task.routes.js")(app);
 
 /*
  * Set server port
@@ -54,5 +55,9 @@ require('./app/routes/task.routes.js')(app)
 // server.listen(SERVER_PORT, () => {
 //   console.log(`server running on ${SERVER_PORT}`);
 // });
-http.createServer(app).listen(8080)
-https.createServer(options, app).listen(8081)
+http
+  .createServer(app)
+  .listen(8080, () => console.log("http server running on 8080"));
+https
+  .createServer(options, app)
+  .listen(8081, () => console.log("https server running on 8081"));
