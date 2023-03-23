@@ -50,9 +50,6 @@ require("./app/routes/task.routes.js")(app);
 /*
  * Set server port
  */
-// server.listen(SERVER_PORT, () => {
-//   console.log(`server running on ${SERVER_PORT}`);
-// });
 http
   .createServer(app)
   .listen(8080, () => console.log("http server running on 8080"));

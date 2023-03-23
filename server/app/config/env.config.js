@@ -3,6 +3,7 @@ require('dotenv').config()
 module.exports = {
     version: '0.0.2',
     SERVER_PORT: process.env.SERVER_PORT,
+    CERT_PATH: process.env.CERT_PATH,
     DB_URL: process.env.DB_URL,
     DB_NAME: process.env.DB_NAME,
     DB_USERNAME: process.env.DB_USERNAME,
