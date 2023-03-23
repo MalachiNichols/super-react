@@ -13,8 +13,8 @@ const { SERVER_PORT } = require("./app/config/env.config");
  * Init SSL creds
  */
 const options = {
-  key: fs.readFileSync("./certs/selfsigned.key"),
-  cert: fs.readFileSync("./certs/selfsigned.crt"),
+  key: fs.readFileSync(`${CERT_PATH}.privkey.pem`),
+  cert: fs.readFileSync(`${CERT_PATH}.fullchain.pem`),
 };
 
 /*
@@ -29,9 +29,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
-  cors({
-    origin: "*",
-  })
+  cors()
 );
 
 /*

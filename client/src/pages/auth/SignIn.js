@@ -19,7 +19,7 @@ const SignIn = () => {
   const submitCredentials = async () => {
     console.log(credentials);
     await fetch(
-      `https://${process.env.REACT_APP_LOCALIP}:8081/api/auth/signin`,
+      `https://${process.env.REACT_APP_LOCALIP}/api/auth/signin`,
       {
         method: "POST",
         body: JSON.stringify({

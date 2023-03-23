@@ -34,7 +34,7 @@ const Column = ({
 
   const saveTitle = async () => {
     setSaveButton(false);
-    await fetch(`https://${process.env.REACT_APP_LOCALIP}:8081/api/columns/update`, {
+    await fetch(`https://${process.env.REACT_APP_LOCALIP}/api/columns/update`, {
       method: "PATCH",
       body: JSON.stringify({
         boardName: currBoard,
@@ -68,7 +68,7 @@ const Column = ({
         id: uuidv4(),
       })
     );
-    await fetch(`https://${process.env.REACT_APP_LOCALIP}:8081/api/tasks/create`, {
+    await fetch(`https://${process.env.REACT_APP_LOCALIP}/api/tasks/create`, {
       method: "POST",
       body: JSON.stringify({
         boardName: currBoard,
@@ -98,7 +98,7 @@ const Column = ({
         deleteTask = x;
       }
     });
-    await fetch(`https://${process.env.REACT_APP_LOCALIP}:8081/api/tasks/delete`, {
+    await fetch(`https://${process.env.REACT_APP_LOCALIP}/api/tasks/delete`, {
       method: "DELETE",
       body: JSON.stringify({
         boardName: currBoard,

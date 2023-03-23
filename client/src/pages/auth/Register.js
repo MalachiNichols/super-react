@@ -20,7 +20,7 @@ const Register = () => {
   const submitCredentials = async () => {
     console.log(credentials);
     await fetch(
-      `https://${process.env.REACT_APP_LOCALIP}:8081/api/auth/signup`,
+      `https://${process.env.REACT_APP_LOCALIP}/api/auth/signup`,
       {
         method: "POST",
         body: JSON.stringify({
