@@ -18,7 +18,6 @@ const Register = () => {
   });
 
   const submitCredentials = async () => {
-    console.log(credentials);
     await fetch(
       `https://${process.env.REACT_APP_LOCALIP}/api/auth/signup`,
       {
@@ -36,10 +35,7 @@ const Register = () => {
       .then((res) => {
         console.log(res);
         if (res.status == 200) {
-          res.json().then((data) => {
-            console.log(data);
-            localStorage.setItem("user", data.username);
-            localStorage.setItem("accessToken", data.accessToken);
+          res.json().then(() => {
             alert("Signed up succesfully!");
             window.location.href = "/signin";
           });

@@ -134,7 +134,6 @@ exports.getMultipleBoard = (req, res) => {
           });
       });
   }).then(() => {
-    console.log("names are " + JSON.stringify(boardNames));
     res.status(200).send(JSON.stringify(boardNames));
   });
 };

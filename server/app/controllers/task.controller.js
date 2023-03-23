@@ -142,7 +142,6 @@ exports.deleteTask = (req, res) => {
     
     // Begin delete task endpoint
     db.tx('deleteTask-transaction', (t) => {
-        console.log(req.body)
         // Find workspace id
         return t.one('SELECT * FROM workspaces WHERE owner_id = $1', [req.userID])
         .then(workspace => {

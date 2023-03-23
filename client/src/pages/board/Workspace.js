@@ -63,7 +63,6 @@ const Workspace = ({ checkCredentials, boards, setBoards, setCurrBoard }) => {
   };
 
   const deleteBoard = async (title) => {
-    console.log(title);
     await fetch(`https://${process.env.REACT_APP_LOCALIP}/api/boards/delete`, {
       method: "DELETE",
       body: JSON.stringify({

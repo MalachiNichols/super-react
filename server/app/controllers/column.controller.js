@@ -70,7 +70,6 @@ exports.addColumn = (req, res) => {
       })
          // SUCCESS
         .then(data => {
-          console.log('transaction successful', data)
           res.status(200).json({message:'column added successfully'})
         })
         // FAIL

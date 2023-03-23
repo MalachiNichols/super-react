@@ -14,7 +14,6 @@ const { db } = require("../config/db.config"); // import db connection instance
 exports.checkDuplicateName = (req, res, next) => {
   db.any(`SELECT name FROM users WHERE name = $1`, [req.body.username])
     .then(user => {
-      console.log(user)
       if(user.length) {
         
         // username already exists

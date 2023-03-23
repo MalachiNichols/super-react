@@ -17,7 +17,6 @@ const SignIn = () => {
   });
 
   const submitCredentials = async () => {
-    console.log(credentials);
     await fetch(
       `https://${process.env.REACT_APP_LOCALIP}/api/auth/signin`,
       {
@@ -36,7 +35,6 @@ const SignIn = () => {
         console.log(res);
         if (res.status == 200) {
           res.json().then((data) => {
-            console.log(data);
             localStorage.setItem("user", data.username);
             localStorage.setItem("accessToken", data.accessToken);
             window.location.href = "/board";

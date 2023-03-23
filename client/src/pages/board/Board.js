@@ -108,7 +108,6 @@ const Board = ({ id }) => {
   }, []);
 
   const titleChange = (e) => {
-    console.log(e.target.value);
     setSaveButton(true);
     setNewTitle(e.target.value);
   };
@@ -116,7 +115,6 @@ const Board = ({ id }) => {
   const updateBoard = async () => {
 
     let title = JSON.parse(JSON.stringify(newTitle))
-    console.log(title)
 
     if(boards.includes(title)) {
       let i = 1
@@ -140,13 +138,11 @@ const Board = ({ id }) => {
       },
     })
       .then((res) => {
-        console.log(res);
         boards.map((board, i) => {
           if (board == currBoard) {
             let temp = boards.slice();
             temp[i] = title;
             setBoards(temp);
-            console.log("hey " + boards + i + " " + temp);
           }
         });
         setCurrBoard(title);
@@ -182,7 +178,6 @@ const Board = ({ id }) => {
         deleteCol = x;
       }
     });
-    console.log(deleteCol);
     setColumns(columns.filter((column) => column.id !== id));
     await fetch(`https://${process.env.REACT_APP_LOCALIP}/api/columns/delete`, {
       method: "DELETE",
