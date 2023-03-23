@@ -7,14 +7,14 @@ const cors = require("cors");
 const https = require("https");
 const http = require("http");
 const fs = require("fs");
-const { SERVER_PORT } = require("./app/config/env.config");
+const { CERT_PATH } = require("./app/config/env.config");
 
 /**
  * Init SSL creds
  */
 const options = {
-  key: fs.readFileSync(`${CERT_PATH}.privkey.pem`),
-  cert: fs.readFileSync(`${CERT_PATH}.fullchain.pem`),
+  key: fs.readFileSync(`${CERT_PATH}privkey.pem`),
+  cert: fs.readFileSync(`${CERT_PATH}fullchain.pem`),
 };
 
 /*
