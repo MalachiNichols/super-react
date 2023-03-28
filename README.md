@@ -1,5 +1,5 @@
 # Hello
-This is a personal project based on a group project based on a personal project... uh, anyways you can check it out at https://kanban.123409876.xyz!
+This is a personal kanban project in React. You can check it out at https://kanban.123409876.xyz!
 
 # Usage
 If you want to mess with source on your own, to run the project open a terminal and cd into `.../super-react/server` and run `node index.js`, then open a second terminal and cd into `.../super-react/client` and run `npm start`. The latter should automatically open a window in your default browser directing to the app (note this will launch the react app in dev mode), but if it doesn't, you can open a browser and go to the url `localhost:3000`. You will have to populate the .env variables and host your own db. You can use the structure as it is detailed in `db_structure.sql`
