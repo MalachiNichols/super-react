@@ -5,7 +5,7 @@ This is a personal project based on a group project based on a personal project.
 If you want to mess with source on your own, to run the project open a terminal and cd into `.../super-react/server` and run `node index.js`, then open a second terminal and cd into `.../super-react/client` and run `npm start`. The latter should automatically open a window in your default browser directing to the app (note this will launch the react app in dev mode), but if it doesn't, you can open a browser and go to the url `localhost:3000`. You will have to populate the .env variables and host your own db. You can use the structure as it is detailed in `db_structure.sql`
 
 # Stack 
-The frontend is React with MUI for styling and customized components. The backend server is Express hooked up to a postgres db I run locally. 
+The frontend is React with MUI for styling and customized components. The backend server is Express hooked up to a postgres db. I am self hosting the frontend server, the backend server, and the database on an SBC. I have a reverse proxy running on a VPS that is connected via a zerotier network to the SBC.
 
 # todo
 1. some form of user state to display username in navbar on signin. 
